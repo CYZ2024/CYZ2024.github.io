@@ -27,20 +27,20 @@
 <meta property="og:site_name" content="CYZ的个人博客">
 <meta property="og:description" content="操作系统介绍什么是裸机开发裸机开发指的是在没有操作系统（OS）或者其他高级软件支持的情况下，直接在裸机硬件上进行软件开发的过程。在裸机开发中，开发者需要直接面对硬件层面的操作和控制，亲自管理 CPU、内存以及 I&#x2F;O 资源，而不依赖于任何操作系统提供的抽象层或者服务。 我们前面学习的 STM32 单片机代码都属于裸机开发。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/image1.png">
-<meta property="og:image" content="http://example.com/image2.png">
-<meta property="og:image" content="http://example.com/image3.png">
-<meta property="og:image" content="http://example.com/image4.png">
-<meta property="og:image" content="http://example.com/image5.png">
-<meta property="og:image" content="http://example.com/image6.png">
-<meta property="og:image" content="http://example.com/image7.png">
-<meta property="og:image" content="http://example.com/image8.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image1.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image2.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image3.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image4.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image5.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image6.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image7.png">
+<meta property="og:image" content="http://example.com/2025/08/04/RTOS/image8.png">
 <meta property="article:published_time" content="2025-08-04T08:04:49.000Z">
-<meta property="article:modified_time" content="2025-08-04T10:12:14.000Z">
-<meta property="article:author" content="John Doe">
+<meta property="article:modified_time" content="2025-08-04T10:52:16.000Z">
+<meta property="article:author" content="CYZ">
 <meta property="article:tag" content="操作系统，RTOS，嵌入式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/image1.png">
+<meta name="twitter:image" content="http://example.com/2025/08/04/RTOS/image1.png">
 
 <link rel="canonical" href="http://example.com/2025/08/04/RTOS/">
 
@@ -179,7 +179,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/chino2.jpg">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="CYZ">
       <meta itemprop="description" content="">
     </span>
 
@@ -199,7 +199,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-08-04 16:04:49 / 修改时间：18:12:14" itemprop="dateCreated datePublished" datetime="2025-08-04T16:04:49+08:00">2025-08-04</time>
+              <time title="创建时间：2025-08-04 16:04:49 / 修改时间：18:52:16" itemprop="dateCreated datePublished" datetime="2025-08-04T16:04:49+08:00">2025-08-04</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -295,7 +295,8 @@
 </li>
 </ol>
 <p>即使单核处理器一次只能执行一项任务。<br>多任务操作系统可以通过任务之间的快速切换制造并发执行的假象。下图展示了与时间相关的三项任务的执行模式。<br>任务名称采用颜色编码，并写在左手边。 时间从左向右移动，<br>彩色线条显示了在任何特定时间正在执行的任务。<br>上方展示了所感知的并发执行模式， 下方展示了实际的多任务执行模式。</p>
-<p><img src="/image1.png" alt="不同执行模式">{width&#x3D;”5.768055555555556in”<br>height&#x3D;”3.0770833333333334in”}</p>
+<img src="/2025/08/04/RTOS/image1.png" class="" title="不同执行模式">
+
 <h2 id="任务调度"><a href="#任务调度" class="headerlink" title="任务调度"></a>任务调度</h2><p>一个处理器核心在某一时刻只能运行一个任务，如在各个任务之间迅速切换，这样看起来就像多个任务在同时运行。操作系统中任务调度器的责任就是决定在某一时刻要执行哪个任务。</p>
 <p>调度器是内核中负责决定在任何特定时间应执行哪些任务的部分。内核可以在任务生命周期内多次挂起并且稍后恢复一个任务。</p>
 <p>调度策略是调度器用来决定在任何时间点执行哪个任务的算法。</p>
@@ -319,7 +320,8 @@
 </li>
 </ul>
 <p>只有就绪态可转变成运行态，其他状态的任务想运行，必须先转变成就绪态。转换关系如下：</p>
-<p><img src="/image2.png" alt="不同状态转换">{width&#x3D;”4.034722222222222in”<br>height&#x3D;”3.4409722222222223in”}</p>
+<img src="/2025/08/04/RTOS/image2.png" class="" title="不同状态转换">
+
 <p>这四种状态中，除了运行态，其他三种任务状态的任务都有其对应的任务状态列表：</p>
 <ul>
 <li><p>就绪列表：pxReadyTasksLists[x]，其中 x 代表任务优先级数值。</p>
@@ -331,9 +333,10 @@
 </ul>
 <p>列表类似于链表，后面章节会专门介绍。</p>
 <p>以就绪列表为例。如果在 32 位的硬件中，会保存一个 32 位的变量，代表 0-31 的优先级。当某个位，置一时，代表所对应的优先级就绪列表有任务存在。</p>
-<p><img src="/image3.png" alt="就绪列表">{width&#x3D;”2.7328357392825895in”<br>height&#x3D;”2.9692639982502187in”}</p>
+<img src="/2025/08/04/RTOS/image3.png" class="" title="就绪列表">
+
 <p>如果有多个任务优先级相同，会连接在同一个就绪列表上：</p>
-<p><img src="/image4.png" alt="优先级相同的就绪列表">{width&#x3D;”4.797303149606299in”<br>height&#x3D;”2.633145231846019in”}</p>
+<img src="/2025/08/04/RTOS/image4.png" class="" title="就绪列表">
 <p>调度器总是在所有处于就绪列表的任务中，选择具有最高优先级的任务来执行。</p>
 <h2 id="FreeRTOS-的滴答"><a href="#FreeRTOS-的滴答" class="headerlink" title="FreeRTOS 的滴答"></a>FreeRTOS 的滴答</h2><p>休眠时，RTOS 任务将指定需要”唤醒”的时间。 阻塞时，RTOS<br>任务可以指定希望等待的最长时间。</p>
 <p>FreeRTOS 实时内核通过<strong>滴答计数变量</strong>测量时间。定时器中断（RTOS<br>滴答中断）以严格的时间精度增加滴答数——允许实时内核以所选择的定时器<strong>中断频率</strong>的分辨率来测量时间。</p>
@@ -349,11 +352,13 @@
 <ol>
 <li>将 TaskA 在相应的处理器寄存器中的上下文保存到其任务堆栈中。</li>
 </ol>
-<p><img src="/image5.png">{width&#x3D;”5.768055555555556in”<br>height&#x3D;”4.732638888888889in”}</p>
+<img src="/2025/08/04/RTOS/image5.png" class="" title="不同执行模式">
+
 <ol start="2">
 <li>将 TaskB 的上下文从其任务堆栈中恢复到相应的处理器寄存器中</li>
 </ol>
-<p><img src="/image6.png">{width&#x3D;”5.768055555555556in”<br>height&#x3D;”3.254861111111111in”}</p>
+<img src="/2025/08/04/RTOS/image6.png" class="" title="不同执行模式">
+
 <ol start="2">
 <li>什么时候进行上下文切换</li>
 </ol>
@@ -1433,7 +1438,8 @@
 <p>对 configUSE_16_BIT_TICKS 或 configTICK_TYPE_WIDTH_IN_BITS 的依赖源于 RTOS<br>任务内部实现中用于线程本地存储的数据类型。我们当前的版本不支持 configTICK_TYPE_WIDTH_IN_BITS 配置，只有 configUSE_16_BIT_TICKS 配置。</p>
 <p>事件组中的所有事件位都 存储在 EventBits_t 类型的单个无符号整数变量中。<br>事件位 0 存储在位 0 中，事件位 1 存储在位 1 中，依此类推。</p>
 <p>下图表示一个 24 位事件组，使用 3 个位来保存前面描述的 3 个示例事件。<br>在图片中，仅设置了事件位 2。</p>
-<p><img src="/image7.png">{width&#x3D;”5.768055555555556in”<br>height&#x3D;”1.4986111111111111in”}</p>
+<img src="/2025/08/04/RTOS/image7.png" class="" title="不同执行模式">
+
 <h3 id="事件标志组和信号量的区别"><a href="#事件标志组和信号量的区别" class="headerlink" title="事件标志组和信号量的区别"></a>事件标志组和信号量的区别</h3><p>事件标志组（Event Flags<br>Group）和信号量（Semaphore）都是 FreeRTOS 中用于任务同步和通信的机制，但它们在用途和行为上有一些关键的区别。</p>
 <hr>
 <p>事件标志组 信号量</p>
@@ -1710,7 +1716,7 @@
 </ol>
 <p>在待机模式下可以达到最低的电能消耗。内部的电压调压器被关闭，因此所有内部 1.8V 部分的供电被切断；PLL、HSI 的 RC 振荡器和 HSE 晶体振荡器也被关闭；进入待机模式后，SRAM 和寄存器的内容将消失，但后备寄存器的内容仍然保留，待机电路仍工作。从待机模式退出的条件是：NRST 上的外部复位信号、IWDG 复位、WKUP 引脚上的一个上升边<br>沿或 RTC 的闹钟到时。</p>
 <p>注意：在进入停机或待机模式时，RTC、IWDG 和对应的时钟不会被停止。</p>
-<p><img src="/image8.png">{width&#x3D;”5.768055555555556in”<br>height&#x3D;”2.3069444444444445in”}</p>
+<img src="/2025/08/04/RTOS/image8.png" class="" title="不同执行模式">
 <p>主要使用睡眠模式，任何中断或事件都可以唤醒睡眠模式。Tickless 低功耗模式通过调用指令<br>__WFI 实现睡眠模式</p>
 <p>FreeRTOS 系统中的所有其它任务都不在运行时（处于阻塞或挂起），会运行空闲任务。所以想不影响系统运行又降低功耗，可以在空闲任务执行的期间，让 MCU<br>进入相应的低功耗模式。</p>
 <p>由于滴答定时器频繁中断则会影响低功耗，所以 FreeRTOS 的 Tickless 低功耗模式会自动把滴答定时器的中断周期修改为低功耗运行时间，退出低功耗后再补上系统时钟节拍数。</p>
@@ -1921,9 +1927,9 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="John Doe"
+    <img class="site-author-image" itemprop="image" alt="CYZ"
       src="/images/chino2.jpg">
-  <p class="site-author-name" itemprop="name">John Doe</p>
+  <p class="site-author-name" itemprop="name">CYZ</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -1983,7 +1989,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">CYZ</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
