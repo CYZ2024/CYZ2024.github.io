@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="LVGL 学习笔记这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。">
+  <meta name="description" content="LVGL 学习笔记 这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LVGL学习笔记">
 <meta property="og:url" content="http://example.com/2025/08/17/LVGL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="CYZ的个人博客">
-<meta property="og:description" content="LVGL 学习笔记这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。">
+<meta property="og:description" content="LVGL 学习笔记 这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-08-17T12:34:07.000Z">
 <meta property="article:modified_time" content="2025-08-17T12:55:06.000Z">
@@ -204,127 +204,166 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="LVGL-学习笔记"><a href="#LVGL-学习笔记" class="headerlink" title="LVGL 学习笔记"></a>LVGL 学习笔记</h1><p>这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。</p>
+        <h1 id="lvgl-学习笔记">LVGL 学习笔记</h1>
+<p>这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。</p>
 <span id="more"></span>
-
-<h2 id="一、核心概念与思想"><a href="#一、核心概念与思想" class="headerlink" title="一、核心概念与思想"></a>一、核心概念与思想</h2><h3 id="1-三层架构：一切的基础"><a href="#1-三层架构：一切的基础" class="headerlink" title="1. 三层架构：一切的基础"></a>1. 三层架构：一切的基础</h3><ul>
-<li><strong>应用层 (Application)</strong>：我们写代码的地方，调用LVGL的API（如<code>lv_btn_create</code>）来“指挥”LVGL。</li>
-<li><strong>LVGL核心 (Core)</strong>：LVGL的“大脑”，负责对象管理、事件处理、样式渲染、字体解码等。我们的“指挥”由它来执行。</li>
-<li><strong>硬件抽象层 (HAL)</strong>：需要我们自己实现的“桥梁”，用C代码描述如何“显示一个像素”、“读取触摸坐标”和“获取时间”，将LVGL核心与具体硬件解耦。</li>
+<h2 id="一核心概念与思想">一、核心概念与思想</h2>
+<h3 id="三层架构一切的基础">1. 三层架构：一切的基础</h3>
+<ul>
+<li><strong>应用层
+(Application)</strong>：我们写代码的地方，调用LVGL的API（如<code>lv_btn_create</code>）来“指挥”LVGL。</li>
+<li><strong>LVGL核心
+(Core)</strong>：LVGL的“大脑”，负责对象管理、事件处理、样式渲染、字体解码等。我们的“指挥”由它来执行。</li>
+<li><strong>硬件抽象层
+(HAL)</strong>：需要我们自己实现的“桥梁”，用C代码描述如何“显示一个像素”、“读取触摸坐标”和“获取时间”，将LVGL核心与具体硬件解耦。</li>
 </ul>
-<h3 id="2-万物皆对象-Object-Model"><a href="#2-万物皆对象-Object-Model" class="headerlink" title="2. 万物皆对象 (Object Model)"></a>2. 万物皆对象 (Object Model)</h3><ul>
+<h3 id="万物皆对象-object-model">2. 万物皆对象 (Object Model)</h3>
+<ul>
 <li>屏幕上的一切（按钮、标签、容器）都是一个<code>lv_obj_t</code>对象。</li>
-<li>对象之间是<strong>父子关系</strong>，形成一棵对象树。<ul>
+<li>对象之间是<strong>父子关系</strong>，形成一棵对象树。
+<ul>
 <li><code>lv_scr_act()</code>是获取当前活动屏幕（顶级父对象）的函数。</li>
 <li>创建对象时必须指定父对象：<code>lv_obj_t * btn = lv_btn_create(lv_scr_act());</code>。</li>
+</ul></li>
+<li><strong>📌 关键技巧</strong>:
+子对象的位置是<strong>相对于父对象的左上角</strong>计算的，并且会跟随父对象移动。这对于创建复杂的复合控件和实现整体布局至关重要。</li>
 </ul>
-</li>
-<li><strong>📌 关键技巧</strong>: 子对象的位置是<strong>相对于父对象的左上角</strong>计算的，并且会跟随父对象移动。这对于创建复杂的复合控件和实现整体布局至关重要。</li>
-</ul>
-<h3 id="3-事件驱动-Event-Driven"><a href="#3-事件驱动-Event-Driven" class="headerlink" title="3. 事件驱动 (Event Driven)"></a>3. 事件驱动 (Event Driven)</h3><ul>
+<h3 id="事件驱动-event-driven">3. 事件驱动 (Event Driven)</h3>
+<ul>
 <li>LVGL是“被动”的。它等待事件发生（如<code>LV_EVENT_CLICKED</code>），然后调用你预先绑定的<strong>回调函数</strong>。</li>
 <li>这是实现交互的核心机制：<code>lv_obj_add_event_cb(obj, callback_func, LV_EVENT_CLICKED, NULL);</code></li>
-<li><strong>回调函数原型</strong>：<code>void my_callback(lv_event_t * e)</code>。<ul>
-<li>可以通过 <code>lv_event_get_target(e)</code> 获取触发事件的对象。</li>
+<li><strong>回调函数原型</strong>：<code>void my_callback(lv_event_t * e)</code>。
+<ul>
+<li>可以通过 <code>lv_event_get_target(e)</code>
+获取触发事件的对象。</li>
 <li>可以通过 <code>lv_event_get_code(e)</code> 获取具体的事件类型。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<hr>
-<h2 id="二、开发流程：SquareLine-Studio-C代码"><a href="#二、开发流程：SquareLine-Studio-C代码" class="headerlink" title="二、开发流程：SquareLine Studio + C代码"></a>二、开发流程：SquareLine Studio + C代码</h2><p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_49337111/article/details/136536375">PC仿真环境搭建</a></p>
-<p> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_49053936/article/details/136696700">STM32移植</a></p>
-<h3 id="1-SquareLine-Studio-负责“皮囊”和“神经”"><a href="#1-SquareLine-Studio-负责“皮囊”和“神经”" class="headerlink" title="1. SquareLine Studio (负责“皮囊”和“神经”)"></a>1. SquareLine Studio (负责“皮囊”和“神经”)</h3><ul>
-<li><strong>做什么</strong>：<ul>
+<hr />
+<h2 id="二开发流程squareline-studio-c代码">二、开发流程：SquareLine
+Studio + C代码</h2>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_49337111/article/details/136536375">PC仿真环境搭建</a></p>
+<p><a
+target="_blank" rel="noopener" href="https://blog.csdn.net/qq_49053936/article/details/136696700">STM32移植</a></p>
+<h3 id="squareline-studio-负责皮囊和神经">1. SquareLine Studio
+(负责“皮囊”和“神经”)</h3>
+<ul>
+<li><strong>做什么</strong>：
+<ul>
 <li><strong>UI布局</strong>：通过拖拽创建所有界面元素。</li>
 <li><strong>样式设计</strong>：通过样式编辑器统一UI风格（颜色、字体、圆角等）。</li>
 <li><strong>事件绑定</strong>：为组件指定在发生某个动作（如<code>CLICKED</code>）时，是“跳转页面(<code>Load Screen</code>)”还是“调用某个C函数(<code>Call Function</code>)”。</li>
-</ul>
-</li>
+</ul></li>
 <li><strong>不做什么</strong>：不关心C函数<strong>里面</strong>的具体逻辑。</li>
-<li><strong>📌 关键技巧</strong>：<strong>给重要的组件起一个有意义的名字</strong> 在<code>Inspector</code>面板的<code>Name</code>字段中，使用如<code>CurrentTempLabel</code>、<code>SettingsButton</code>这样的命名，而不是默认的<code>Label1</code>、<code>Button3</code>。这会直接影响到代码中生成的变量名（<code>ui_CurrentTempLabel</code>），极大提高代码的可读性。</li>
+<li><strong>📌
+关键技巧</strong>：<strong>给重要的组件起一个有意义的名字</strong>
+在<code>Inspector</code>面板的<code>Name</code>字段中，使用如<code>CurrentTempLabel</code>、<code>SettingsButton</code>这样的命名，而不是默认的<code>Label1</code>、<code>Button3</code>。这会直接影响到代码中生成的变量名（<code>ui_CurrentTempLabel</code>），极大提高代码的可读性。</li>
 </ul>
-<h3 id="2-C代码-负责“灵魂”"><a href="#2-C代码-负责“灵魂”" class="headerlink" title="2. C代码 (负责“灵魂”)"></a>2. C代码 (负责“灵魂”)</h3><ul>
-<li><strong><code>ui_events.c</code></strong>：<strong>这是我们最常编辑的文件</strong>。SquareLine Studio会在这里生成事件回调的“空函数”，我们需要在里面填写具体的业务逻辑。</li>
-<li>**<code>ui.c</code> **：用于定义全局的状态变量（如<code>bool g_device_on;</code>），以及创建LVGL定时器 (<code>lv_timer_create</code>) 来处理动态数据更新。</li>
-</ul>
-<blockquote>
-<p><strong>⚠️ 容易出错的地方</strong><br><strong>绝对不要手动修改SquareLine Studio自动生成的UI文件</strong>，例如<code>ui_HomePage.c</code>或<code>ui.c</code>中的UI创建部分。当你下一次从SquareLine Studio导出代码时，<strong>你所有的手动修改都会被无情地覆盖</strong>！始终在<code>ui_events.c</code>和自定义函数（如<code>ui_custom_init</code>）中添加你的逻辑。</p>
-</blockquote>
-<hr>
-<h2 id="三、关键代码实践"><a href="#三、关键代码实践" class="headerlink" title="三、关键代码实践"></a>三、关键代码实践</h2><h4 id="1-如何让Label显示变量的值？"><a href="#1-如何让Label显示变量的值？" class="headerlink" title="1. 如何让Label显示变量的值？"></a>1. 如何让Label显示变量的值？</h4><p>核心是使用<code>sprintf</code>将数字转换为字符串。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 定义一个变量和一个缓冲区</span></span><br><span class="line"><span class="type">int</span> temperature = <span class="number">26</span>;</span><br><span class="line"><span class="type">char</span> buffer[<span class="number">32</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 将变量格式化到缓冲区</span></span><br><span class="line"><span class="comment">// %d 用于整数, %.1f 用于保留一位小数的浮点数</span></span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;温度: %d °C&quot;</span>, temperature);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 更新UI上的标签</span></span><br><span class="line"><span class="comment">// ui_TempLabel 是在SquareLine中为标签起的名字</span></span><br><span class="line">lv_label_set_text(ui_TempLabel, buffer);</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>⚠️ 容易出错的地方</strong><br><strong><code>printf</code> &#x2F; <code>sprintf</code> 函数未声明</strong>：这是最常见的编译错误之一。原因是每个<code>.c</code>文件都是独立编译的。如果你在<code>ui.c</code>和<code>ui_events.c</code>中都使用了<code>sprintf</code>，那么<strong>这两个文件的顶部都必须包含<code>#include &lt;stdio.h&gt;</code></strong>。</p>
-</blockquote>
-<h4 id="2-如何在事件中获取组件状态？"><a href="#2-如何在事件中获取组件状态？" class="headerlink" title="2. 如何在事件中获取组件状态？"></a>2. 如何在事件中获取组件状态？</h4><ul>
-<li><strong>获取滑块的值</strong>：  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">OnSliderValueChanged</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * slider = lv_event_get_target(e);</span><br><span class="line">    <span class="type">int32_t</span> value = lv_slider_get_value(slider);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><strong>判断开关状态</strong>：  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">OnSwitchToggled</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * sw = lv_event_get_target(e);</span><br><span class="line">    <span class="keyword">if</span> (lv_obj_has_state(sw, LV_STATE_CHECKED)) &#123;</span><br><span class="line">        <span class="comment">// 开关处于“开”的状态</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 开关处于“关”的状态</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="3-如何实现多文件共享变量？"><a href="#3-如何实现多文件共享变量？" class="headerlink" title="3. 如何实现多文件共享变量？"></a>3. 如何实现多文件共享变量？</h4><p>当<code>ui_events.c</code>需要访问在<code>ui.c</code>中定义的变量时：</p>
+<h3 id="c代码-负责灵魂">2. C代码 (负责“灵魂”)</h3>
 <ul>
-<li><strong>在 <code>ui.c</code> (定义方)</strong>：将变量定义为全局变量（<strong>移除<code>static</code>关键字</strong>）。  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ui.c</span></span><br><span class="line"><span class="type">bool</span> g_device_on = <span class="literal">false</span>; <span class="comment">// 全局可见</span></span><br></pre></td></tr></table></figure></li>
-<li><strong>在 <code>ui_events.c</code> (使用方)</strong>：使用<code>extern</code>关键字进行声明。  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ui_events.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">bool</span> g_device_on; <span class="comment">// 告诉编译器，这个变量在别处定义</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">some_event_handler</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    g_device_on = <span class="literal">true</span>; <span class="comment">// 现在可以正常使用了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>⚠️ 容易出错的地方</strong><br><strong>链接错误：<code>undefined reference to &#39;g_device_on&#39;</code></strong>：这个错误意味着链接器找不到变量的定义。99%的原因是你在<code>ui.c</code>中将变量定义为了<code>static bool g_device_on</code>。<code>static</code>关键字会将变量的作用域限制在当前文件内，导致其他文件无法访问。<strong>需要跨文件共享的变量，不能用<code>static</code>修饰。</strong></p>
-</blockquote>
-</li>
+<li><strong><code>ui_events.c</code></strong>：<strong>这是我们最常编辑的文件</strong>。SquareLine
+Studio会在这里生成事件回调的“空函数”，我们需要在里面填写具体的业务逻辑。</li>
+<li><strong><code>ui.c</code>
+</strong>：用于定义全局的状态变量（如<code>bool g_device_on;</code>），以及创建LVGL定时器
+(<code>lv_timer_create</code>) 来处理动态数据更新。</li>
 </ul>
-<hr>
-<h2 id="四、硬件移植核心"><a href="#四、硬件移植核心" class="headerlink" title="四、硬件移植核心"></a>四、硬件移植核心</h2><p>移植的本质是实现三个函数，并将它们注册给LVGL。</p>
-<ol>
-<li><strong>显示刷新 <code>my_disp_flush</code></strong>:<ul>
+<blockquote>
+<p><strong>⚠️ 容易出错的地方</strong> <strong>绝对不要手动修改SquareLine
+Studio自动生成的UI文件</strong>，例如<code>ui_HomePage.c</code>或<code>ui.c</code>中的UI创建部分。当你下一次从SquareLine
+Studio导出代码时，<strong>你所有的手动修改都会被无情地覆盖</strong>！始终在<code>ui_events.c</code>和自定义函数（如<code>ui_custom_init</code>）中添加你的逻辑。</p>
+</blockquote>
+<hr />
+<h2 id="三关键代码实践">三、关键代码实践</h2>
+<h4 id="如何让label显示变量的值">1. 如何让Label显示变量的值？</h4>
+<p>核心是使用<code>sprintf</code>将数字转换为字符串。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 定义一个变量和一个缓冲区</span></span><br><span class="line"><span class="type">int</span> temperature = <span class="number">26</span>;</span><br><span class="line"><span class="type">char</span> buffer[<span class="number">32</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 将变量格式化到缓冲区</span></span><br><span class="line"><span class="comment">// %d 用于整数, %.1f 用于保留一位小数的浮点数</span></span><br><span class="line"><span class="built_in">sprintf</span>(buffer, <span class="string">&quot;温度: %d °C&quot;</span>, temperature);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 更新UI上的标签</span></span><br><span class="line"><span class="comment">// ui_TempLabel 是在SquareLine中为标签起的名字</span></span><br><span class="line">lv_label_set_text(ui_TempLabel, buffer);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>⚠️ 容易出错的地方</strong> <strong><code>printf</code> /
+<code>sprintf</code>
+函数未声明</strong>：这是最常见的编译错误之一。原因是每个<code>.c</code>文件都是独立编译的。如果你在<code>ui.c</code>和<code>ui_events.c</code>中都使用了<code>sprintf</code>，那么<strong>这两个文件的顶部都必须包含<code>#include &lt;stdio.h&gt;</code></strong>。</p>
+</blockquote>
+<h4 id="如何在事件中获取组件状态">2. 如何在事件中获取组件状态？</h4>
+<ul>
+<li><strong>获取滑块的值</strong>： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">OnSliderValueChanged</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * slider = lv_event_get_target(e);</span><br><span class="line">    <span class="type">int32_t</span> value = lv_slider_get_value(slider);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><strong>判断开关状态</strong>： <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">OnSwitchToggled</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    <span class="type">lv_obj_t</span> * sw = lv_event_get_target(e);</span><br><span class="line">    <span class="keyword">if</span> (lv_obj_has_state(sw, LV_STATE_CHECKED)) &#123;</span><br><span class="line">        <span class="comment">// 开关处于“开”的状态</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 开关处于“关”的状态</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="如何实现多文件共享变量">3. 如何实现多文件共享变量？</h4>
+<p>当<code>ui_events.c</code>需要访问在<code>ui.c</code>中定义的变量时：</p>
+<ul>
+<li><strong>在 <code>ui.c</code>
+(定义方)</strong>：将变量定义为全局变量（<strong>移除<code>static</code>关键字</strong>）。
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ui.c</span></span><br><span class="line"><span class="type">bool</span> g_device_on = <span class="literal">false</span>; <span class="comment">// 全局可见</span></span><br></pre></td></tr></table></figure></li>
+<li><strong>在 <code>ui_events.c</code>
+(使用方)</strong>：使用<code>extern</code>关键字进行声明。 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ui_events.c</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">bool</span> g_device_on; <span class="comment">// 告诉编译器，这个变量在别处定义</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">some_event_handler</span><span class="params">(<span class="type">lv_event_t</span> * e)</span> &#123;</span><br><span class="line">    g_device_on = <span class="literal">true</span>; <span class="comment">// 现在可以正常使用了</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+&gt; <strong>⚠️ 容易出错的地方</strong> &gt;
+<strong>链接错误：<code>undefined reference to 'g_device_on'</code></strong>：这个错误意味着链接器找不到变量的定义。99%的原因是你在<code>ui.c</code>中将变量定义为了<code>static bool g_device_on</code>。<code>static</code>关键字会将变量的作用域限制在当前文件内，导致其他文件无法访问。<strong>需要跨文件共享的变量，不能用<code>static</code>修饰。</strong></li>
+</ul>
+<hr />
+<h2 id="四硬件移植核心">四、硬件移植核心</h2>
+<p>移植的本质是实现三个函数，并将它们注册给LVGL。</p>
+<ol type="1">
+<li><strong>显示刷新 <code>my_disp_flush</code></strong>:
+<ul>
 <li><strong>作用</strong>：LVGL调用此函数，并传入一块渲染好的像素数据(<code>color_p</code>)和区域(<code>area</code>)。</li>
 <li><strong>你的任务</strong>：调用你自己的底层驱动（如<code>LCD_Color_Fill</code>），将这块数据通过SPI+DMA发送到屏幕的指定区域。</li>
-<li><strong>关键</strong>：数据发送完成后，<strong>必须调用 <code>lv_disp_flush_ready(disp);</code></strong>。</li>
-</ul>
-</li>
+<li><strong>关键</strong>：数据发送完成后，<strong>必须调用
+<code>lv_disp_flush_ready(disp);</code></strong>。</li>
+</ul></li>
 </ol>
 <blockquote>
-<p><strong>⚠️ 容易出错的地方</strong><br>忘记调用<code>lv_disp_flush_ready(disp);</code>是移植中最常见的错误。现象通常是<strong>UI只显示第一帧然后就卡住不动了</strong>，因为LVGL一直在等待你通知它“我已经画完了，你可以继续了”。</p>
+<p><strong>⚠️ 容易出错的地方</strong>
+忘记调用<code>lv_disp_flush_ready(disp);</code>是移植中最常见的错误。现象通常是<strong>UI只显示第一帧然后就卡住不动了</strong>，因为LVGL一直在等待你通知它“我已经画完了，你可以继续了”。</p>
 </blockquote>
-<ol start="2">
-<li><p><strong>触摸读取 <code>my_touchpad_read</code></strong>:</p>
+<ol start="2" type="1">
+<li><strong>触摸读取 <code>my_touchpad_read</code></strong>:
 <ul>
 <li><strong>作用</strong>：LVGL周期性调用此函数，查询触摸状态。</li>
 <li><strong>你的任务</strong>：调用你的触摸芯片驱动（如<code>CST816_Get_XY_AXIS</code>）获取坐标，并判断是否有触摸。</li>
 <li><strong>关键</strong>：将获取的数据填充到LVGL的<code>lv_indev_data_t</code>结构体中，包括坐标(<code>data-&gt;point</code>)和状态(<code>data-&gt;state</code>，按下为<code>LV_INDEV_STATE_PR</code>，松开为<code>LV_INDEV_STATE_REL</code>)。</li>
-</ul>
-</li>
-<li><p><strong>系统时钟 <code>my_tick_get</code></strong>:</p>
+</ul></li>
+<li><strong>系统时钟 <code>my_tick_get</code></strong>:
 <ul>
 <li><strong>作用</strong>：为LVGL提供一个毫秒级的时间戳。</li>
-<li><strong>你的任务</strong>：直接返回STM32 HAL库的 <code>HAL_GetTick()</code> 即可。</li>
-</ul>
-</li>
+<li><strong>你的任务</strong>：直接返回STM32 HAL库的
+<code>HAL_GetTick()</code> 即可。</li>
+</ul></li>
 </ol>
-<hr>
-<h2 id="五、常见问题与调试技巧"><a href="#五、常见问题与调试技巧" class="headerlink" title="五、常见问题与调试技巧"></a>五、常见问题与调试技巧</h2><ul>
-<li><p><strong>编译错误：<code>&#39;xxx&#39; undeclared</code></strong></p>
+<hr />
+<h2 id="五常见问题与调试技巧">五、常见问题与调试技巧</h2>
 <ul>
-<li><strong>字体未声明</strong>：去<code>lv_conf.h</code>开启对应的字体宏 (<code>#define LV_FONT_MONTSERRAT_20 1</code>)。</li>
-<li><strong>函数未声明 (<code>printf</code>)</strong>：在当前<code>.c</code>文件的顶部添加<code>#include &lt;stdio.h&gt;</code>。</li>
-<li><strong>UI组件&#x2F;屏幕变量未声明</strong>：通常是你在SquareLine Studio中重命名了组件或屏幕，但事件绑定的还是旧名字。<strong>解决方法</strong>：回到SquareLine Studio，<strong>删除并重新创建</strong>那个出问题的事件绑定，然后重新导出代码。</li>
-</ul>
-</li>
-<li><p><strong>链接错误：<code>undefined reference to &#39;xxx&#39;</code></strong></p>
+<li><strong>编译错误：<code>'xxx' undeclared</code></strong>
+<ul>
+<li><strong>字体未声明</strong>：去<code>lv_conf.h</code>开启对应的字体宏
+(<code>#define LV_FONT_MONTSERRAT_20 1</code>)。</li>
+<li><strong>函数未声明
+(<code>printf</code>)</strong>：在当前<code>.c</code>文件的顶部添加<code>#include &lt;stdio.h&gt;</code>。</li>
+<li><strong>UI组件/屏幕变量未声明</strong>：通常是你在SquareLine
+Studio中重命名了组件或屏幕，但事件绑定的还是旧名字。<strong>解决方法</strong>：回到SquareLine
+Studio，<strong>删除并重新创建</strong>那个出问题的事件绑定，然后重新导出代码。</li>
+</ul></li>
+<li><strong>链接错误：<code>undefined reference to 'xxx'</code></strong>
 <ul>
 <li>通常是因为变量被<code>static</code>修饰，导致其他文件无法访问。移除定义方的<code>static</code>关键字。</li>
-</ul>
-</li>
-<li><p><strong>PC仿真找不到文件</strong></p>
+</ul></li>
+<li><strong>PC仿真找不到文件</strong>
 <ul>
 <li><strong>错误现象</strong>：<code>fatal error: ...ui/screens/ui_Screen1.c: No such file or directory</code>。</li>
-<li><strong>原因</strong>：你在SquareLine Studio中重命名或删除了屏幕&#x2F;资源，但构建系统（CMake&#x2F;Make）还缓存着旧的文件列表。</li>
+<li><strong>原因</strong>：你在SquareLine
+Studio中重命名或删除了屏幕/资源，但构建系统（CMake/Make）还缓存着旧的文件列表。</li>
 <li><strong>解决方法</strong>：<strong>删除项目根目录下的<code>build</code>文件夹</strong>，然后重新编译。这会强制构建系统重新扫描项目，生成正确的文件列表。</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2 id="六、参考资源-References"><a href="#六、参考资源-References" class="headerlink" title="六、参考资源 (References)"></a>六、参考资源 (References)</h2><ul>
-<li><strong>LVGL 官方网站</strong>: <a target="_blank" rel="noopener" href="https://lvgl.io/">https://lvgl.io/</a></li>
-<li><strong>LVGL 官方文档</strong>: <a target="_blank" rel="noopener" href="https://docs.lvgl.io/">https://docs.lvgl.io/</a></li>
-<li><strong>SquareLine Studio 官方网站</strong>: <a target="_blank" rel="noopener" href="https://squareline.io/">https://squareline.io/</a></li>
-<li><strong>韦东山LVGL手册</strong>: <a target="_blank" rel="noopener" href="https://lvgl.100ask.net/master/index.html">https://lvgl.100ask.net/master/index.html</a></li>
+<h2 id="六参考资源-references">六、参考资源 (References)</h2>
+<ul>
+<li><strong>LVGL 官方网站</strong>: <a
+target="_blank" rel="noopener" href="https://lvgl.io/">https://lvgl.io/</a></li>
+<li><strong>LVGL 官方文档</strong>: <a
+target="_blank" rel="noopener" href="https://docs.lvgl.io/">https://docs.lvgl.io/</a></li>
+<li><strong>SquareLine Studio 官方网站</strong>: <a
+target="_blank" rel="noopener" href="https://squareline.io/">https://squareline.io/</a></li>
+<li><strong>韦东山LVGL手册</strong>: <a
+target="_blank" rel="noopener" href="https://lvgl.100ask.net/master/index.html">https://lvgl.100ask.net/master/index.html</a></li>
 </ul>
 
     </div>
@@ -409,7 +448,9 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LVGL-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">LVGL 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">一、核心概念与思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%80%E5%88%87%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 三层架构：一切的基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1-Object-Model"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 万物皆对象 (Object Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8-Event-Driven"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 事件驱动 (Event Driven)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B%EF%BC%9ASquareLine-Studio-C%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">二、开发流程：SquareLine Studio + C代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-SquareLine-Studio-%E8%B4%9F%E8%B4%A3%E2%80%9C%E7%9A%AE%E5%9B%8A%E2%80%9D%E5%92%8C%E2%80%9C%E7%A5%9E%E7%BB%8F%E2%80%9D"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. SquareLine Studio (负责“皮囊”和“神经”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-C%E4%BB%A3%E7%A0%81-%E8%B4%9F%E8%B4%A3%E2%80%9C%E7%81%B5%E9%AD%82%E2%80%9D"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. C代码 (负责“灵魂”)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.3.</span> <span class="nav-text">三、关键代码实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%A6%82%E4%BD%95%E8%AE%A9Label%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC%EF%BC%9F"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1. 如何让Label显示变量的值？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E5%9C%A8%E4%BA%8B%E4%BB%B6%E4%B8%AD%E8%8E%B7%E5%8F%96%E7%BB%84%E4%BB%B6%E7%8A%B6%E6%80%81%EF%BC%9F"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2. 如何在事件中获取组件状态？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%A4%9A%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%EF%BC%9F"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3. 如何实现多文件共享变量？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E7%A1%AC%E4%BB%B6%E7%A7%BB%E6%A4%8D%E6%A0%B8%E5%BF%83"><span class="nav-number">1.4.</span> <span class="nav-text">四、硬件移植核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">1.5.</span> <span class="nav-text">五、常见问题与调试技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90-References"><span class="nav-number">1.6.</span> <span class="nav-text">六、参考资源 (References)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#lvgl-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">LVGL 学习笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">一、核心概念与思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84%E4%B8%80%E5%88%87%E7%9A%84%E5%9F%BA%E7%A1%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">1. 三层架构：一切的基础</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%87%E7%89%A9%E7%9A%86%E5%AF%B9%E8%B1%A1-object-model"><span class="nav-number">1.1.2.</span> <span class="nav-text">2. 万物皆对象 (Object Model)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8-event-driven"><span class="nav-number">1.1.3.</span> <span class="nav-text">3. 事件驱动 (Event Driven)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8Bsquareline-studio-c%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">二、开发流程：SquareLine
+Studio + C代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#squareline-studio-%E8%B4%9F%E8%B4%A3%E7%9A%AE%E5%9B%8A%E5%92%8C%E7%A5%9E%E7%BB%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. SquareLine Studio
+(负责“皮囊”和“神经”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c%E4%BB%A3%E7%A0%81-%E8%B4%9F%E8%B4%A3%E7%81%B5%E9%AD%82"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. C代码 (负责“灵魂”)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.3.</span> <span class="nav-text">三、关键代码实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%AE%A9label%E6%98%BE%E7%A4%BA%E5%8F%98%E9%87%8F%E7%9A%84%E5%80%BC"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">1. 如何让Label显示变量的值？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E4%BA%8B%E4%BB%B6%E4%B8%AD%E8%8E%B7%E5%8F%96%E7%BB%84%E4%BB%B6%E7%8A%B6%E6%80%81"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">2. 如何在事件中获取组件状态？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%A4%9A%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">3. 如何实现多文件共享变量？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E7%A1%AC%E4%BB%B6%E7%A7%BB%E6%A4%8D%E6%A0%B8%E5%BF%83"><span class="nav-number">1.4.</span> <span class="nav-text">四、硬件移植核心</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%B0%83%E8%AF%95%E6%8A%80%E5%B7%A7"><span class="nav-number">1.5.</span> <span class="nav-text">五、常见问题与调试技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E5%8F%82%E8%80%83%E8%B5%84%E6%BA%90-references"><span class="nav-number">1.6.</span> <span class="nav-text">六、参考资源 (References)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -528,6 +569,8 @@
 
 
 
+
+  
 
   
 

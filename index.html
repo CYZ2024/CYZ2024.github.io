@@ -72,7 +72,119 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -191,7 +303,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-12 21:23:46" itemprop="dateModified" datetime="2025-09-12T21:23:46+08:00">2025-09-12</time>
+                <time title="修改时间：2025-09-12 23:45:02" itemprop="dateModified" datetime="2025-09-12T23:45:02+08:00">2025-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,86 +326,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <span id="more"></span>
-
-<h1 id="Buck-电路"><a href="#Buck-电路" class="headerlink" title="Buck 电路"></a>Buck 电路</h1><img src="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png" class="" title="Buck电路">
-
-<h2 id="核心思想与基本组成"><a href="#核心思想与基本组成" class="headerlink" title="核心思想与基本组成"></a>核心思想与基本组成</h2><p>Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。</p>
-<h2 id="一、核心思想与基本组成"><a href="#一、核心思想与基本组成" class="headerlink" title="一、核心思想与基本组成"></a>一、核心思想与基本组成</h2><p>一个基本的 Buck 电路由以下四个关键元件组成：</p>
-<ol>
-<li><p><strong>开关（：</strong> 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。</p>
-</li>
-<li><p><strong>肖特基二极管：</strong> 在开关断开时，为电感电流提供一个持续流动的路径。因此也叫”续流（Freewheeling）”二极管。</p>
-</li>
-<li><p><strong>电感：</strong> 核心储能元件。在开关导通时储存能量（以磁场形式），在开关断开时释放能量，起到平滑电流的作用。</p>
-</li>
-<li><p><strong>电容：</strong> 另一个储能元件。主要作用是滤除输出电压的纹波，使得输出电压更加平滑稳定，为负载（Load）提供瞬时电流。</p>
-</li>
-</ol>
-<h2 id="二、工作原理详解（两个核心阶段）"><a href="#二、工作原理详解（两个核心阶段）" class="headerlink" title="二、工作原理详解（两个核心阶段）"></a>二、工作原理详解（两个核心阶段）</h2><p>Buck 电路的工作过程是周期性的，每个周期都包含两个主要阶段：<strong>开关导通（ON）</strong> 和 <strong>开关关断（OFF）</strong>。我们假设电路工作在<strong>连续导通模式（Continuous Conduction Mode, CCM）</strong>，这意味着电感中的电流在整个工作周期内始终大于零。</p>
-<h3 id="阶段一：开关-S-导通-时间-T-on"><a href="#阶段一：开关-S-导通-时间-T-on" class="headerlink" title="阶段一：开关 S 导通 (时间 $T_{on}$)"></a>阶段一：开关 S 导通 (时间 $T_{on}$)</h3><ol>
-<li><p><strong>电流路径</strong>：输入电压源 $V_{in}$ 通过闭合的开关 S，流经电感 L，一部分电流供给负载 R，另一部分为电容 C 充电。此时，续流二极管 D 因为其阳极电压（$V_{out}$）低于阴极电压（近似 $V_{in}$），处于反向截止状态，没有电流流过。</p>
-</li>
-<li><p><strong>电感行为</strong>：电感两端的电压为 $V_L &#x3D; V_{in} - V_{out}$。因为 $V_{in} &gt; V_{out}$，所以电感两端是一个正电压。根据电感公式 $V_L &#x3D; L \frac{dI_L}{dt}$，电感中的电流 $I_L$ 会线性增加。在这个阶段，输入电源向电感中注入能量，电感以磁场的形式储存这些能量。</p>
-</li>
-<li><p><strong>电容行为</strong>：电容 C 两端的电压就是输出电压 $V_{out}$。它会吸收一部分来自电感的电流，同时向负载供电，以维持输出电压的稳定，并滤除电压纹波。</p>
-</li>
-</ol>
-<h3 id="阶段二：开关-S-关断-时间-T-off"><a href="#阶段二：开关-S-关断-时间-T-off" class="headerlink" title="阶段二：开关 S 关断 (时间 $T_{off}$)"></a>阶段二：开关 S 关断 (时间 $T_{off}$)</h3><ol>
-<li><p><strong>电流路径</strong>：开关 S 断开，输入电源 $V_{in}$ 被切断。由于电感的电流不能突变（电感有维持电流的特性），它会产生一个反向电动势（上负下正）来试图维持电流继续流动。</p>
-</li>
-<li><p><strong>二极管行为</strong>：电感的反向电动势使得其上端电压变为负值，这会使得续流二极管 D 的阳极电压（近似 0V，即 GND）高于其阴极电压（负值），因此二极管 D 正向导通，形成一个新的回路：<strong>电感 L → 负载 R 和电容 C → 续流二极管 D → 电感 L</strong>。</p>
-</li>
-<li><p><strong>电感行为</strong>：此时，电感两端的电压为 $V_L &#x3D; -V_{out}$（忽略二极管的正向压降）。这是一个负电压，因此电感电流 $I_L$ 会线性下降。在这个阶段，电感将之前储存的磁场能量释放出来，继续为负载和电容供电。</p>
-</li>
-</ol>
-<h2 id="三、关键参数与数学关系"><a href="#三、关键参数与数学关系" class="headerlink" title="三、关键参数与数学关系"></a>三、关键参数与数学关系</h2><h3 id="1-占空比-Duty-Cycle-D"><a href="#1-占空比-Duty-Cycle-D" class="headerlink" title="1. 占空比 (Duty Cycle, D)"></a>1. 占空比 (Duty Cycle, D)</h3><p>占空比是控制 Buck 电路输出电压的关键参数。它定义为在一个开关周期（T）内，开关导通时间（$T_{on}$）所占的比例。</p>
-<p>$D &#x3D; \frac{T_{on}}{T} &#x3D; \frac{T_{on}}{T_{on} + T_{off}}$</p>
-<p>其中，T 是开关周期，$T &#x3D; 1&#x2F;f_s$，$f_s$ 是开关频率。</p>
-<h3 id="2-电压关系"><a href="#2-电压关系" class="headerlink" title="2. 电压关系"></a>2. 电压关系</h3><p>在一个稳定的工作周期中，电感在一个周期内的平均电压必须为零（否则电流将无限增大或减小），这被称为<strong>电感伏秒平衡原理</strong>。</p>
-<ul>
-<li>导通期间，电感电压的”伏秒积”为：$(V_{in} - V_{out}) \cdot T_{on}$</li>
-<li>关断期间，电感电压的”伏秒积”为：$(-V_{out}) \cdot T_{off}$</li>
-</ul>
-<p>根据伏秒平衡：</p>
-<p>$(V_{in} - V_{out}) \cdot T_{on} &#x3D; V_{out} \cdot T_{off}$</p>
-<p>整理上式：</p>
-<p>$V_{in} \cdot T_{on} &#x3D; V_{out} \cdot (T_{on} + T_{off}) &#x3D; V_{out} \cdot T$</p>
-<p>因此，我们得到 Buck 电路最核心的电压关系式：</p>
-<p>$V_{out} &#x3D; V_{in} \cdot \frac{T_{on}}{T} &#x3D; V_{in} \cdot D$</p>
-<p>这个公式清晰地表明：<strong>输出电压等于输入电压乘以占空比</strong>。由于占空比 D 的范围是 0 到 1，所以 $V_{out}$ 永远小于或等于 $V_{in}$，这就是”降压”的来源。控制电路通过精确调节占空比 D，就能实现对输出电压的稳定控制。</p>
-<h2 id="buck-电路的动态变化"><a href="#buck-电路的动态变化" class="headerlink" title="buck 电路的动态变化"></a>buck 电路的动态变化</h2><p>现在有一个由理想元件构成的开环 buck 电路，负载是一个可调电阻，我在把阻值调小的过程会发生什么</p>
-<p><strong>初始状态：旧平衡点</strong></p>
-<ul>
-<li>每个开关期间 $I_L$ 的平均值不变，等于$I_{out}$</li>
-<li>$V_{out}$也保持恒定</li>
-</ul>
-<p><strong>平衡被打破</strong></p>
-<ul>
-<li>负载电阻减小，由于电容电压不能瞬变，电感电流不能瞬变，根据欧姆定律，负载电流 $I_{out}$增大</li>
-<li>电容放电提供额外的电流，导致电压$V_{out}$开始轻微下降</li>
-</ul>
-<p><strong>物理定律负反馈</strong></p>
-<p>*a)*开关导通阶段</p>
-<ul>
-<li>电感电压 $V_L &#x3D; V_{in}-V_{out}$</li>
-<li>由于$V_{out}$下降，$V_L$比平衡点更大一点，</li>
-<li>电感的基本定理$V_{L}&#x3D;L \frac{d I_{L}}{d t},$，更大的电压意味着电流的上升的斜率更大</li>
-<li>同样的导通时间，会使得电流上升量更大</li>
-</ul>
-<p>*b)*开关断开阶段</p>
-<ul>
-<li>电感电压 $V_L &#x3D; -V_{out}$</li>
-<li>$V_{out}$下降，电感两段电压减小，意味着电流下降的斜率平缓了</li>
-<li>在同样的关断时间，电流下降的量更少</li>
-</ul>
-<p><strong>新平衡</strong></p>
-<ul>
-<li>在一个周期内，电流会上升一点点，电压会下降一点点</li>
-<li>重复这个周期 ，当电感平均电流等于新的负载电流，达到新的平衡</li>
-<li>此时电压也不再下降，固定在一个更低的位置</li>
-</ul>
-
+          <p>记录一些开关电源的学习随笔</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -351,7 +392,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="LVGL-学习笔记"><a href="#LVGL-学习笔记" class="headerlink" title="LVGL 学习笔记"></a>LVGL 学习笔记</h1><p>这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。</p>
+          <h1 id="lvgl-学习笔记">LVGL 学习笔记</h1>
+<p>这份笔记总结了LVGL入门的核心知识点、关键代码、实用技巧以及常见的错误，旨在成为一份可以快速查阅和回顾的精炼手册。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/08/17/LVGL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
@@ -432,8 +474,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="整体框架"><a href="#整体框架" class="headerlink" title="整体框架"></a>整体框架</h1><h2 id="硬件结构"><a href="#硬件结构" class="headerlink" title="硬件结构"></a>硬件结构</h2><h3 id="系统组成"><a href="#系统组成" class="headerlink" title="系统组成"></a>系统组成</h3><p>主控使用 STM32F411CEU6，操作系统使用 FreeRTOS，图形库使用的 LVGL。传感器部分：手势识别使用 6 轴 MPU6050；心率血氧使用的是 EM7028；海拔测量用的气压计 SPL06-001；电子指南针使用 LSM303DLHC；蓝牙芯片用的 KT6368A，有 SPP 功能，可以无线升级。</p>
-<p><img src="https://no-chicken.com/images/OV-Watch/0/%E6%A1%86%E5%9B%BE.png"></p>
+          <h1 id="整体框架">整体框架</h1>
+<h2 id="硬件结构">硬件结构</h2>
+<h3 id="系统组成">系统组成</h3>
+<p>主控使用 STM32F411CEU6，操作系统使用 FreeRTOS，图形库使用的
+LVGL。传感器部分：手势识别使用 6 轴 MPU6050；心率血氧使用的是
+EM7028；海拔测量用的气压计 SPL06-001；电子指南针使用
+LSM303DLHC；蓝牙芯片用的 KT6368A，有 SPP 功能，可以无线升级。</p>
+<p><img
+src="https://no-chicken.com/images/OV-Watch/0/%E6%A1%86%E5%9B%BE.png" /></p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/08/05/%E6%99%BA%E8%83%BD%E6%89%8B%E8%A1%A8%E5%A4%8D%E5%88%BB%E7%AC%94%E8%AE%B0/#more" rel="contents">
@@ -508,7 +557,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="操作系统介绍"><a href="#操作系统介绍" class="headerlink" title="操作系统介绍"></a>操作系统介绍</h1><h2 id="什么是裸机开发"><a href="#什么是裸机开发" class="headerlink" title="什么是裸机开发"></a>什么是裸机开发</h2><p>裸机开发指的是在没有操作系统（OS）或者其他高级软件支持的情况下，直接在裸机硬件上进行软件开发的过程。在裸机开发中，开发者需要直接面对硬件层面的操作和控制，亲自管理 CPU、内存以及 I&#x2F;O 资源，而不依赖于任何操作系统提供的抽象层或者服务。</p>
+          <h1 id="操作系统介绍">操作系统介绍</h1>
+<h2 id="什么是裸机开发">什么是裸机开发</h2>
+<p>裸机开发指的是在没有操作系统（OS）或者其他高级软件支持的情况下，直接在裸机硬件上进行软件开发的过程。在裸机开发中，开发者需要直接面对硬件层面的操作和控制，亲自管理
+CPU、内存以及 I/O 资源，而不依赖于任何操作系统提供的抽象层或者服务。</p>
 <p>我们前面学习的 STM32 单片机代码都属于裸机开发。</p>
           <!--noindex-->
             <div class="post-button">
@@ -590,13 +642,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="STM32F103C8T6-微控制器入门学习笔记"><a href="#STM32F103C8T6-微控制器入门学习笔记" class="headerlink" title="STM32F103C8T6 微控制器入门学习笔记"></a>STM32F103C8T6 微控制器入门学习笔记</h1><h2 id="基于-STM32-标准外设库"><a href="#基于-STM32-标准外设库" class="headerlink" title="基于 STM32 标准外设库"></a>基于 STM32 标准外设库</h2><h2 id="笔记概述"><a href="#笔记概述" class="headerlink" title="笔记概述"></a>笔记概述</h2><p>本笔记以 STM32F103C8T6 为目标芯片，使用 Keil5 开发环境和 STM32 标准外设库（Standard Peripheral Library），，掌握基本的 MCU 编程和调试技能。</p>
-<h3 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h3><ul>
+          <h1 id="stm32f103c8t6-微控制器入门学习笔记">STM32F103C8T6
+微控制器入门学习笔记</h1>
+<h2 id="基于-stm32-标准外设库">基于 STM32 标准外设库</h2>
+<h2 id="笔记概述">笔记概述</h2>
+<p>本笔记以 STM32F103C8T6 为目标芯片，使用 Keil5 开发环境和 STM32
+标准外设库（Standard Peripheral Library），，掌握基本的 MCU
+编程和调试技能。</p>
+<h3 id="开发环境">开发环境</h3>
+<ul>
 <li><strong>目标芯片</strong>: STM32F103C8T6 (ARM Cortex-M3 内核)</li>
 <li><strong>开发工具</strong>: Keil MDK-ARM 5</li>
-<li><strong>库版本</strong>: STM32F10x Standard Peripheral Library V3.5.0</li>
-<li><strong>调试器</strong>: ST-Link V2</li>
-</ul>
+<li><strong>库版本</strong>: STM32F10x Standard Peripheral Library
+V3.5.0</li>
+<li><strong>调试器</strong>: ST-Link V2
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/07/27/STM32F103C8T6%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/#more" rel="contents">
@@ -677,7 +736,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="嵌入式-AI-学习规划"><a href="#嵌入式-AI-学习规划" class="headerlink" title="嵌入式 AI 学习规划"></a>嵌入式 AI 学习规划</h1>
+          <h1 id="嵌入式-ai-学习规划">嵌入式 AI 学习规划</h1>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/07/26/%E5%B5%8C%E5%85%A5%E5%BC%8Fai%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/#more" rel="contents">
@@ -758,7 +817,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="EDA-Robot-项目技术分析笔记"><a href="#EDA-Robot-项目技术分析笔记" class="headerlink" title="EDA-Robot 项目技术分析笔记"></a>EDA-Robot 项目技术分析笔记</h1><p>本文旨在对基于 ESP8266 的开源四足机器人项目“EDA-Robot”进行技术拆解与分析，为嵌入式系统开发者提供一份详实的参考资料。该项目整合了多项嵌入式核心技术，包括多轴舵机控制、Web 服务器搭建、网络 API 交互及状态机设计模式，是一个综合性的实践案例。</p>
+          <h1 id="eda-robot-项目技术分析笔记">EDA-Robot 项目技术分析笔记</h1>
+<p>本文旨在对基于 ESP8266
+的开源四足机器人项目“EDA-Robot”进行技术拆解与分析，为嵌入式系统开发者提供一份详实的参考资料。该项目整合了多项嵌入式核心技术，包括多轴舵机控制、Web
+服务器搭建、网络 API 交互及状态机设计模式，是一个综合性的实践案例。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2025/07/26/EDA-Robot%E5%A4%8D%E5%88%BB%E7%AC%94%E8%AE%B0/#more" rel="contents">
@@ -883,19 +945,29 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
+first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
+more info. If you get any problems when using Hexo, you can find the
+answer in <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
+you can ask me on <a
+target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a
+target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
@@ -1084,6 +1156,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

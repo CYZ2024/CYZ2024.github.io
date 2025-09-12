@@ -20,16 +20,16 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Buck 电路  核心思想与基本组成Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。 一、核心思想与基本组成一个基本的 Buck 电路由以下四个关键元件组成：  开关（： 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。">
+  <meta name="description" content="记录一些开关电源的学习随笔">
 <meta property="og:type" content="article">
 <meta property="og:title" content="开关电源随笔">
 <meta property="og:url" content="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/index.html">
 <meta property="og:site_name" content="CYZ的个人博客">
-<meta property="og:description" content="Buck 电路  核心思想与基本组成Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。 一、核心思想与基本组成一个基本的 Buck 电路由以下四个关键元件组成：  开关（： 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。">
+<meta property="og:description" content="记录一些开关电源的学习随笔">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png">
 <meta property="article:published_time" content="2025-09-10T15:34:43.000Z">
-<meta property="article:modified_time" content="2025-09-12T13:23:46.000Z">
+<meta property="article:modified_time" content="2025-09-12T15:45:02.000Z">
 <meta property="article:author" content="CYZ">
 <meta property="article:tag" content="电源">
 <meta name="twitter:card" content="summary">
@@ -79,7 +79,119 @@
   </style>
 </noscript>
 
-</head>
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
@@ -198,7 +310,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-09-12 21:23:46" itemprop="dateModified" datetime="2025-09-12T21:23:46+08:00">2025-09-12</time>
+                <time title="修改时间：2025-09-12 23:45:02" itemprop="dateModified" datetime="2025-09-12T23:45:02+08:00">2025-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -221,77 +333,108 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <span id="more"></span>
-
-<h1 id="Buck-电路"><a href="#Buck-电路" class="headerlink" title="Buck 电路"></a>Buck 电路</h1><img src="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png" class="" title="Buck电路">
-
-<h2 id="核心思想与基本组成"><a href="#核心思想与基本组成" class="headerlink" title="核心思想与基本组成"></a>核心思想与基本组成</h2><p>Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。</p>
-<h2 id="一、核心思想与基本组成"><a href="#一、核心思想与基本组成" class="headerlink" title="一、核心思想与基本组成"></a>一、核心思想与基本组成</h2><p>一个基本的 Buck 电路由以下四个关键元件组成：</p>
-<ol>
-<li><p><strong>开关（：</strong> 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。</p>
-</li>
-<li><p><strong>肖特基二极管：</strong> 在开关断开时，为电感电流提供一个持续流动的路径。因此也叫”续流（Freewheeling）”二极管。</p>
-</li>
-<li><p><strong>电感：</strong> 核心储能元件。在开关导通时储存能量（以磁场形式），在开关断开时释放能量，起到平滑电流的作用。</p>
-</li>
-<li><p><strong>电容：</strong> 另一个储能元件。主要作用是滤除输出电压的纹波，使得输出电压更加平滑稳定，为负载（Load）提供瞬时电流。</p>
-</li>
+        <p>记录一些开关电源的学习随笔</p>
+<span id="more"></span>
+<h1 id="buck-电路">Buck 电路</h1>
+<img src="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png" class="" title="Buck电路">
+<h2 id="核心思想与基本组成">核心思想与基本组成</h2>
+<p>Buck
+电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。</p>
+<h2 id="一核心思想与基本组成">一、核心思想与基本组成</h2>
+<p>一个基本的 Buck 电路由以下四个关键元件组成：</p>
+<ol type="1">
+<li><p><strong>开关：</strong> 通常是一个 MOSFET，由一个控制电路（PWM
+控制器）以极高的频率（通常是几十 kHz 到几
+MHz）控制其快速导通和关断。</p></li>
+<li><p><strong>肖特基二极管：</strong>
+在开关断开时，为电感电流提供一个持续流动的路径。因此也叫”续流”二极管。</p></li>
+<li><p><strong>电感：</strong>
+核心储能元件。在开关导通时储存能量（以磁场形式），在开关断开时释放能量，起到平滑电流的作用。</p></li>
+<li><p><strong>电容：</strong>
+另一个储能元件。主要作用是滤除输出电压的纹波，使得输出电压更加平滑稳定，为负载（Load）提供瞬时电流。</p></li>
 </ol>
-<h2 id="二、工作原理详解（两个核心阶段）"><a href="#二、工作原理详解（两个核心阶段）" class="headerlink" title="二、工作原理详解（两个核心阶段）"></a>二、工作原理详解（两个核心阶段）</h2><p>Buck 电路的工作过程是周期性的，每个周期都包含两个主要阶段：<strong>开关导通（ON）</strong> 和 <strong>开关关断（OFF）</strong>。我们假设电路工作在<strong>连续导通模式（Continuous Conduction Mode, CCM）</strong>，这意味着电感中的电流在整个工作周期内始终大于零。</p>
-<h3 id="阶段一：开关-S-导通-时间-T-on"><a href="#阶段一：开关-S-导通-时间-T-on" class="headerlink" title="阶段一：开关 S 导通 (时间 $T_{on}$)"></a>阶段一：开关 S 导通 (时间 $T_{on}$)</h3><ol>
-<li><p><strong>电流路径</strong>：输入电压源 $V_{in}$ 通过闭合的开关 S，流经电感 L，一部分电流供给负载 R，另一部分为电容 C 充电。此时，续流二极管 D 因为其阳极电压（$V_{out}$）低于阴极电压（近似 $V_{in}$），处于反向截止状态，没有电流流过。</p>
-</li>
-<li><p><strong>电感行为</strong>：电感两端的电压为 $V_L &#x3D; V_{in} - V_{out}$。因为 $V_{in} &gt; V_{out}$，所以电感两端是一个正电压。根据电感公式 $V_L &#x3D; L \frac{dI_L}{dt}$，电感中的电流 $I_L$ 会线性增加。在这个阶段，输入电源向电感中注入能量，电感以磁场的形式储存这些能量。</p>
-</li>
-<li><p><strong>电容行为</strong>：电容 C 两端的电压就是输出电压 $V_{out}$。它会吸收一部分来自电感的电流，同时向负载供电，以维持输出电压的稳定，并滤除电压纹波。</p>
-</li>
+<h2 id="二工作原理详解两个核心阶段">二、工作原理详解（两个核心阶段）</h2>
+<p>Buck
+电路的工作过程是周期性的，每个周期都包含两个主要阶段：<strong>开关导通（ON）</strong>
+和
+<strong>开关关断（OFF）</strong>。我们假设电路工作在<strong>连续导通模式（Continuous
+Conduction Mode,
+CCM）</strong>，这意味着电感中的电流在整个工作周期内始终大于零。</p>
+<h3 id="阶段一开关-s-导通-时间-t_on">阶段一：开关 S 导通 (时间 <span class="math inline"><em>T</em><sub><em>o</em><em>n</em></sub></span>)</h3>
+<ol type="1">
+<li><p><strong>电流路径</strong>：输入电压源 <span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub></span>
+通过闭合的开关 S，流经电感 L，一部分电流供给负载 R，另一部分为电容 C
+充电。此时，续流二极管 D 因为其阳极电压（<span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>）低于阴极电压（近似
+<span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub></span>），处于反向截止状态，没有电流流过。</p></li>
+<li><p><strong>电感行为</strong>：电感两端的电压为 <span class="math inline"><em>V</em><sub><em>L</em></sub> = <em>V</em><sub><em>i</em><em>n</em></sub> − <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>。因为
+<span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub> &gt; <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>，所以电感两端是一个正电压。根据电感公式
+<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.798ex;" xmlns="http://www.w3.org/2000/svg" width="10.588ex" height="2.918ex" role="img" focusable="false" viewBox="0 -936.8 4680.1 1289.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="mi" transform="translate(616,-150) scale(0.707)"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g></g><g data-mml-node="mo" transform="translate(1425.3,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(2481.1,0)"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mfrac" transform="translate(3162.1,0)"><g data-mml-node="mrow" transform="translate(220,446.1) scale(0.707)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="msub" transform="translate(520,0)"><g data-mml-node="mi"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g><g data-mml-node="mi" transform="translate(473,-150) scale(0.707)"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g></g></g><g data-mml-node="mrow" transform="translate(447.5,-345) scale(0.707)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><rect width="1278" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span>，电感中的电流
+<span class="math inline"><em>I</em><sub><em>L</em></sub></span>
+会线性增加。在这个阶段，输入电源向电感中注入能量，电感以磁场的形式储存这些能量。</p></li>
+<li><p><strong>电容行为</strong>：电容 C 两端的电压就是输出电压 <span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>。它会吸收一部分来自电感的电流，同时向负载供电，以维持输出电压的稳定，并滤除电压纹波。</p></li>
 </ol>
-<h3 id="阶段二：开关-S-关断-时间-T-off"><a href="#阶段二：开关-S-关断-时间-T-off" class="headerlink" title="阶段二：开关 S 关断 (时间 $T_{off}$)"></a>阶段二：开关 S 关断 (时间 $T_{off}$)</h3><ol>
-<li><p><strong>电流路径</strong>：开关 S 断开，输入电源 $V_{in}$ 被切断。由于电感的电流不能突变（电感有维持电流的特性），它会产生一个反向电动势（上负下正）来试图维持电流继续流动。</p>
-</li>
-<li><p><strong>二极管行为</strong>：电感的反向电动势使得其上端电压变为负值，这会使得续流二极管 D 的阳极电压（近似 0V，即 GND）高于其阴极电压（负值），因此二极管 D 正向导通，形成一个新的回路：<strong>电感 L → 负载 R 和电容 C → 续流二极管 D → 电感 L</strong>。</p>
-</li>
-<li><p><strong>电感行为</strong>：此时，电感两端的电压为 $V_L &#x3D; -V_{out}$（忽略二极管的正向压降）。这是一个负电压，因此电感电流 $I_L$ 会线性下降。在这个阶段，电感将之前储存的磁场能量释放出来，继续为负载和电容供电。</p>
-</li>
+<h3 id="阶段二开关-s-关断-时间-t_off">阶段二：开关 S 关断 (时间 <span class="math inline"><em>T</em><sub><em>o</em><em>f</em><em>f</em></sub></span>)</h3>
+<ol type="1">
+<li><p><strong>电流路径</strong>：开关 S 断开，输入电源 <span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub></span>
+被切断。由于电感的电流不能突变（电感有维持电流的特性），它会产生一个反向电动势（上负下正）来试图维持电流继续流动。</p></li>
+<li><p><strong>二极管行为</strong>：电感的反向电动势使得其上端电压变为负值，这会使得续流二极管
+D 的阳极电压（近似 0V，即 GND）高于其阴极电压（负值），因此二极管 D
+正向导通，形成一个新的回路：<strong>电感 L → 负载 R 和电容 C →
+续流二极管 D → 电感 L</strong>。</p></li>
+<li><p><strong>电感行为</strong>：此时，电感两端的电压为 <span class="math inline"><em>V</em><sub><em>L</em></sub> = −<em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>（忽略二极管的正向压降）。这是一个负电压，因此电感电流
+<span class="math inline"><em>I</em><sub><em>L</em></sub></span>
+会线性下降。在这个阶段，电感将之前储存的磁场能量释放出来，继续为负载和电容供电。</p></li>
 </ol>
-<h2 id="三、关键参数与数学关系"><a href="#三、关键参数与数学关系" class="headerlink" title="三、关键参数与数学关系"></a>三、关键参数与数学关系</h2><h3 id="1-占空比-Duty-Cycle-D"><a href="#1-占空比-Duty-Cycle-D" class="headerlink" title="1. 占空比 (Duty Cycle, D)"></a>1. 占空比 (Duty Cycle, D)</h3><p>占空比是控制 Buck 电路输出电压的关键参数。它定义为在一个开关周期（T）内，开关导通时间（$T_{on}$）所占的比例。</p>
-<p>$D &#x3D; \frac{T_{on}}{T} &#x3D; \frac{T_{on}}{T_{on} + T_{off}}$</p>
-<p>其中，T 是开关周期，$T &#x3D; 1&#x2F;f_s$，$f_s$ 是开关频率。</p>
-<h3 id="2-电压关系"><a href="#2-电压关系" class="headerlink" title="2. 电压关系"></a>2. 电压关系</h3><p>在一个稳定的工作周期中，电感在一个周期内的平均电压必须为零（否则电流将无限增大或减小），这被称为<strong>电感伏秒平衡原理</strong>。</p>
+<h2 id="三关键参数与数学关系">三、关键参数与数学关系</h2>
+<h3 id="占空比-duty-cycle-d">1. 占空比 (Duty Cycle, D)</h3>
+<p>占空比是控制 Buck
+电路输出电压的关键参数。它定义为在一个开关周期（T）内，开关导通时间（<span class="math inline"><em>T</em><sub><em>o</em><em>n</em></sub></span>）所占的比例。</p>
+<p><span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -1.252ex;" xmlns="http://www.w3.org/2000/svg" width="18.592ex" height="3.357ex" role="img" focusable="false" viewBox="0 -930.3 8217.7 1483.8"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D437" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path></g><g data-mml-node="mo" transform="translate(1105.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(2161.6,0)"><g data-mml-node="msub" transform="translate(220,451.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mi" transform="translate(478.2,-345) scale(0.707)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><rect width="1214.1" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(3893.5,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mfrac" transform="translate(4949.3,0)"><g data-mml-node="msub" transform="translate(1127.1,451.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mrow" transform="translate(220,-345) scale(0.707)"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mo" transform="translate(1434.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="msub" transform="translate(2212.2,0)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g><g data-mml-node="mi" transform="translate(1035,0)"><path data-c="1D453" d="M118 -162Q120 -162 124 -164T135 -167T147 -168Q160 -168 171 -155T187 -126Q197 -99 221 27T267 267T289 382V385H242Q195 385 192 387Q188 390 188 397L195 425Q197 430 203 430T250 431Q298 431 298 432Q298 434 307 482T319 540Q356 705 465 705Q502 703 526 683T550 630Q550 594 529 578T487 561Q443 561 443 603Q443 622 454 636T478 657L487 662Q471 668 457 668Q445 668 434 658T419 630Q412 601 403 552T387 469T380 433Q380 431 435 431Q480 431 487 430T498 424Q499 420 496 407T491 391Q489 386 482 386T428 385H372L349 263Q301 15 282 -47Q255 -132 212 -173Q175 -205 139 -205Q107 -205 81 -186T55 -132Q55 -95 76 -78T118 -61Q162 -61 162 -103Q162 -122 151 -136T127 -157L118 -162Z"></path></g></g></g></g><rect width="3028.4" height="60" x="120" y="220"></rect></g></g></g></svg></mjx-container></span></p>
+<p>其中，T 是开关周期，<span class="math inline"><em>T</em> = 1/<em>f</em><sub><em>s</em></sub></span>，<span class="math inline"><em>f</em><sub><em>s</em></sub></span>
+是开关频率。</p>
+<h3 id="电压关系">2. 电压关系</h3>
+<p>在一个稳定的工作周期中，电感在一个周期内的平均电压必须为零（否则电流将无限增大或减小），这被称为<strong>电感伏秒平衡原理</strong>。</p>
 <ul>
-<li>导通期间，电感电压的”伏秒积”为：$(V_{in} - V_{out}) \cdot T_{on}$</li>
-<li>关断期间，电感电压的”伏秒积”为：$(-V_{out}) \cdot T_{off}$</li>
+<li>导通期间，电感电压的”伏秒积”为：<span class="math inline">(<em>V</em><sub><em>i</em><em>n</em></sub> − <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub>) ⋅ <em>T</em><sub><em>o</em><em>n</em></sub></span></li>
+<li>关断期间，电感电压的”伏秒积”为：<span class="math inline">(−<em>V</em><sub><em>o</em><em>u</em><em>t</em></sub>) ⋅ <em>T</em><sub><em>o</em><em>f</em><em>f</em></sub></span></li>
 </ul>
 <p>根据伏秒平衡：</p>
-<p>$(V_{in} - V_{out}) \cdot T_{on} &#x3D; V_{out} \cdot T_{off}$</p>
+<p><span class="math inline">(<em>V</em><sub><em>i</em><em>n</em></sub> − <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub>) ⋅ <em>T</em><sub><em>o</em><em>n</em></sub> = <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub> ⋅ <em>T</em><sub><em>o</em><em>f</em><em>f</em></sub></span></p>
 <p>整理上式：</p>
-<p>$V_{in} \cdot T_{on} &#x3D; V_{out} \cdot (T_{on} + T_{off}) &#x3D; V_{out} \cdot T$</p>
+<p><span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub> ⋅ <em>T</em><sub><em>o</em><em>n</em></sub> = <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub> ⋅ (<em>T</em><sub><em>o</em><em>n</em></sub> + <em>T</em><sub><em>o</em><em>f</em><em>f</em></sub>) = <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub> ⋅ <em>T</em></span></p>
 <p>因此，我们得到 Buck 电路最核心的电压关系式：</p>
-<p>$V_{out} &#x3D; V_{in} \cdot \frac{T_{on}}{T} &#x3D; V_{in} \cdot D$</p>
-<p>这个公式清晰地表明：<strong>输出电压等于输入电压乘以占空比</strong>。由于占空比 D 的范围是 0 到 1，所以 $V_{out}$ 永远小于或等于 $V_{in}$，这就是”降压”的来源。控制电路通过精确调节占空比 D，就能实现对输出电压的稳定控制。</p>
-<h2 id="buck-电路的动态变化"><a href="#buck-电路的动态变化" class="headerlink" title="buck 电路的动态变化"></a>buck 电路的动态变化</h2><p>现在有一个由理想元件构成的开环 buck 电路，负载是一个可调电阻，我在把阻值调小的过程会发生什么</p>
+<p><span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.781ex;" xmlns="http://www.w3.org/2000/svg" width="24.279ex" height="2.885ex" role="img" focusable="false" viewBox="0 -930.3 10731.2 1275.3"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D462" d="M21 287Q21 295 30 318T55 370T99 420T158 442Q204 442 227 417T250 358Q250 340 216 246T182 105Q182 62 196 45T238 27T291 44T328 78L339 95Q341 99 377 247Q407 367 413 387T427 416Q444 431 463 431Q480 431 488 421T496 402L420 84Q419 79 419 68Q419 43 426 35T447 26Q469 29 482 57T512 145Q514 153 532 153Q551 153 551 144Q550 139 549 130T540 98T523 55T498 17T462 -8Q454 -10 438 -10Q372 -10 347 46Q345 45 336 36T318 21T296 6T267 -6T233 -11Q189 -11 155 7Q103 38 103 113Q103 170 138 262T173 379Q173 380 173 381Q173 390 173 393T169 400T158 404H154Q131 404 112 385T82 344T65 302T57 280Q55 278 41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(1057,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></g><g data-mml-node="mo" transform="translate(1946.5,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="msub" transform="translate(3002.2,0)"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mo" transform="translate(4558.7,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mfrac" transform="translate(5058.9,0)"><g data-mml-node="msub" transform="translate(220,451.6) scale(0.707)"><g data-mml-node="mi"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><g data-mml-node="TeXAtom" transform="translate(617,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D45C" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g data-mml-node="mi" transform="translate(485,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mi" transform="translate(478.2,-345) scale(0.707)"><path data-c="1D447" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g><rect width="1214.1" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(6790.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="msub" transform="translate(7846.6,0)"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g><g data-mml-node="mi" transform="translate(345,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g><g data-mml-node="mo" transform="translate(9403,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mi" transform="translate(9903.2,0)"><path data-c="1D437" d="M287 628Q287 635 230 637Q207 637 200 638T193 647Q193 655 197 667T204 682Q206 683 403 683Q570 682 590 682T630 676Q702 659 752 597T803 431Q803 275 696 151T444 3L430 1L236 0H125H72Q48 0 41 2T33 11Q33 13 36 25Q40 41 44 43T67 46Q94 46 127 49Q141 52 146 61Q149 65 218 339T287 628ZM703 469Q703 507 692 537T666 584T629 613T590 629T555 636Q553 636 541 636T512 636T479 637H436Q392 637 386 627Q384 623 313 339T242 52Q242 48 253 48T330 47Q335 47 349 47T373 46Q499 46 581 128Q617 164 640 212T683 339T703 469Z"></path></g></g></g></svg></mjx-container></span></p>
+<p>这个公式清晰地表明：<strong>输出电压等于输入电压乘以占空比</strong>。由于占空比
+D 的范围是 0 到 1，所以 <span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>
+永远小于或等于 <span class="math inline"><em>V</em><sub><em>i</em><em>n</em></sub></span>，这就是”降压”的来源。控制电路通过精确调节占空比
+D，就能实现对输出电压的稳定控制。</p>
+<h2 id="buck-电路的动态变化">buck 电路的动态变化</h2>
+<p>现在有一个由理想元件构成的开环 buck
+电路，负载是一个可调电阻，我在把阻值调小的过程会发生什么</p>
 <p><strong>初始状态：旧平衡点</strong></p>
 <ul>
-<li>每个开关期间 $I_L$ 的平均值不变，等于$I_{out}$</li>
-<li>$V_{out}$也保持恒定</li>
+<li>每个开关期间 <span class="math inline"><em>I</em><sub><em>L</em></sub></span>
+的平均值不变，等于<span class="math inline"><em>I</em><sub><em>o</em><em>u</em><em>t</em></sub></span></li>
+<li><span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>也保持恒定</li>
 </ul>
 <p><strong>平衡被打破</strong></p>
 <ul>
-<li>负载电阻减小，由于电容电压不能瞬变，电感电流不能瞬变，根据欧姆定律，负载电流 $I_{out}$增大</li>
-<li>电容放电提供额外的电流，导致电压$V_{out}$开始轻微下降</li>
+<li>负载电阻减小，由于电容电压不能瞬变，电感电流不能瞬变，根据欧姆定律，负载电流
+<span class="math inline"><em>I</em><sub><em>o</em><em>u</em><em>t</em></sub></span>增大</li>
+<li>电容放电提供额外的电流，导致电压<span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>开始轻微下降</li>
 </ul>
 <p><strong>物理定律负反馈</strong></p>
-<p>*a)*开关导通阶段</p>
+<p><em>a)</em>开关导通阶段</p>
 <ul>
-<li>电感电压 $V_L &#x3D; V_{in}-V_{out}$</li>
-<li>由于$V_{out}$下降，$V_L$比平衡点更大一点，</li>
-<li>电感的基本定理$V_{L}&#x3D;L \frac{d I_{L}}{d t},$，更大的电压意味着电流的上升的斜率更大</li>
+<li>电感电压 <span class="math inline"><em>V</em><sub><em>L</em></sub> = <em>V</em><sub><em>i</em><em>n</em></sub> − <em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span></li>
+<li>由于<span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>下降，<span class="math inline"><em>V</em><sub><em>L</em></sub></span>比平衡点更大一点，</li>
+<li>电感的基本定理<span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.798ex;" xmlns="http://www.w3.org/2000/svg" width="11.217ex" height="2.918ex" role="img" focusable="false" viewBox="0 -936.8 4958.1 1289.6"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="1D449" d="M52 648Q52 670 65 683H76Q118 680 181 680Q299 680 320 683H330Q336 677 336 674T334 656Q329 641 325 637H304Q282 635 274 635Q245 630 242 620Q242 618 271 369T301 118L374 235Q447 352 520 471T595 594Q599 601 599 609Q599 633 555 637Q537 637 537 648Q537 649 539 661Q542 675 545 679T558 683Q560 683 570 683T604 682T668 681Q737 681 755 683H762Q769 676 769 672Q769 655 760 640Q757 637 743 637Q730 636 719 635T698 630T682 623T670 615T660 608T652 599T645 592L452 282Q272 -9 266 -16Q263 -18 259 -21L241 -22H234Q216 -22 216 -15Q213 -9 177 305Q139 623 138 626Q133 637 76 637H59Q52 642 52 648Z"></path></g><g data-mml-node="TeXAtom" transform="translate(616,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g></g></g><g data-mml-node="mo" transform="translate(1425.3,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mi" transform="translate(2481.1,0)"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mfrac" transform="translate(3162.1,0)"><g data-mml-node="mrow" transform="translate(220,446.1) scale(0.707)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="msub" transform="translate(520,0)"><g data-mml-node="mi"><path data-c="1D43C" d="M43 1Q26 1 26 10Q26 12 29 24Q34 43 39 45Q42 46 54 46H60Q120 46 136 53Q137 53 138 54Q143 56 149 77T198 273Q210 318 216 344Q286 624 286 626Q284 630 284 631Q274 637 213 637H193Q184 643 189 662Q193 677 195 680T209 683H213Q285 681 359 681Q481 681 487 683H497Q504 676 504 672T501 655T494 639Q491 637 471 637Q440 637 407 634Q393 631 388 623Q381 609 337 432Q326 385 315 341Q245 65 245 59Q245 52 255 50T307 46H339Q345 38 345 37T342 19Q338 6 332 0H316Q279 2 179 2Q143 2 113 2T65 2T43 1Z"></path></g><g data-mml-node="TeXAtom" transform="translate(473,-150) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g></g></g></g><g data-mml-node="mrow" transform="translate(447.5,-345) scale(0.707)"><g data-mml-node="mi"><path data-c="1D451" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path></g><g data-mml-node="mi" transform="translate(520,0)"><path data-c="1D461" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g><rect width="1278" height="60" x="120" y="220"></rect></g><g data-mml-node="mo" transform="translate(4680.1,0)"><path data-c="2C" d="M78 35T78 60T94 103T137 121Q165 121 187 96T210 8Q210 -27 201 -60T180 -117T154 -158T130 -185T117 -194Q113 -194 104 -185T95 -172Q95 -168 106 -156T131 -126T157 -76T173 -3V9L172 8Q170 7 167 6T161 3T152 1T140 0Q113 0 96 17Z"></path></g></g></g></svg></mjx-container></span>，更大的电压意味着电流的上升的斜率更大</li>
 <li>同样的导通时间，会使得电流上升量更大</li>
 </ul>
-<p>*b)*开关断开阶段</p>
+<p><em>b)</em>开关断开阶段</p>
 <ul>
-<li>电感电压 $V_L &#x3D; -V_{out}$</li>
-<li>$V_{out}$下降，电感两段电压减小，意味着电流下降的斜率平缓了</li>
+<li>电感电压 <span class="math inline"><em>V</em><sub><em>L</em></sub> = −<em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span></li>
+<li><span class="math inline"><em>V</em><sub><em>o</em><em>u</em><em>t</em></sub></span>下降，电感两段电压减小，意味着电流下降的斜率平缓了</li>
 <li>在同样的关断时间，电流下降的量更少</li>
 </ul>
 <p><strong>新平衡</strong></p>
@@ -380,7 +523,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Buck-%E7%94%B5%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">Buck 电路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.2.</span> <span class="nav-text">一、核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">二、工作原理详解（两个核心阶段）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E5%BC%80%E5%85%B3-S-%E5%AF%BC%E9%80%9A-%E6%97%B6%E9%97%B4-T-on"><span class="nav-number">1.3.1.</span> <span class="nav-text">阶段一：开关 S 导通 (时间 $T_{on}$)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E5%BC%80%E5%85%B3-S-%E5%85%B3%E6%96%AD-%E6%97%B6%E9%97%B4-T-off"><span class="nav-number">1.3.2.</span> <span class="nav-text">阶段二：开关 S 关断 (时间 $T_{off}$)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E4%B8%8E%E6%95%B0%E5%AD%A6%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.</span> <span class="nav-text">三、关键参数与数学关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8D%A0%E7%A9%BA%E6%AF%94-Duty-Cycle-D"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 占空比 (Duty Cycle, D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%94%B5%E5%8E%8B%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 电压关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buck-%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E5%8F%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">buck 电路的动态变化</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#buck-%E7%94%B5%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">Buck 电路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.2.</span> <span class="nav-text">一、核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%98%B6%E6%AE%B5"><span class="nav-number">1.3.</span> <span class="nav-text">二、工作原理详解（两个核心阶段）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%E5%BC%80%E5%85%B3-s-%E5%AF%BC%E9%80%9A-%E6%97%B6%E9%97%B4-t_on"><span class="nav-number">1.3.1.</span> <span class="nav-text">阶段一：开关 S 导通 (时间 Ton)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%E5%BC%80%E5%85%B3-s-%E5%85%B3%E6%96%AD-%E6%97%B6%E9%97%B4-t_off"><span class="nav-number">1.3.2.</span> <span class="nav-text">阶段二：开关 S 关断 (时间 Toff)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E4%B8%8E%E6%95%B0%E5%AD%A6%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.</span> <span class="nav-text">三、关键参数与数学关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%A0%E7%A9%BA%E6%AF%94-duty-cycle-d"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 占空比 (Duty Cycle, D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%B5%E5%8E%8B%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 电压关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buck-%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E5%8F%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">buck 电路的动态变化</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -501,6 +644,61 @@
 
 
   
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
