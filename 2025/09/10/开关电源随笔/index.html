@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Buck 电路  核心思想与基本组成Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。 一、核心思想与基本组成一个基本的 Buck 电路由以下四个关键元件组成：  开关（： 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开关电源随笔">
+<meta property="og:url" content="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/index.html">
+<meta property="og:site_name" content="CYZ的个人博客">
+<meta property="og:description" content="Buck 电路  核心思想与基本组成Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。 一、核心思想与基本组成一个基本的 Buck 电路由以下四个关键元件组成：  开关（： 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png">
+<meta property="article:published_time" content="2025-09-10T15:34:43.000Z">
+<meta property="article:modified_time" content="2025-09-12T13:23:46.000Z">
+<meta property="article:author" content="CYZ">
+<meta property="article:tag" content="电源">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png">
+
+<link rel="canonical" href="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>开关电源随笔 | CYZ的个人博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">CYZ的个人博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chino2.jpg">
+      <meta itemprop="name" content="CYZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CYZ的个人博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          开关电源随笔
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-10 23:34:43" itemprop="dateCreated datePublished" datetime="2025-09-10T23:34:43+08:00">2025-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-12 21:23:46" itemprop="dateModified" datetime="2025-09-12T21:23:46+08:00">2025-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <span id="more"></span>
+
+<h1 id="Buck-电路"><a href="#Buck-电路" class="headerlink" title="Buck 电路"></a>Buck 电路</h1><img src="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png" class="" title="Buck电路">
+
+<h2 id="核心思想与基本组成"><a href="#核心思想与基本组成" class="headerlink" title="核心思想与基本组成"></a>核心思想与基本组成</h2><p>Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。</p>
+<h2 id="一、核心思想与基本组成"><a href="#一、核心思想与基本组成" class="headerlink" title="一、核心思想与基本组成"></a>一、核心思想与基本组成</h2><p>一个基本的 Buck 电路由以下四个关键元件组成：</p>
+<ol>
+<li><p><strong>开关（：</strong> 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。</p>
+</li>
+<li><p><strong>肖特基二极管：</strong> 在开关断开时，为电感电流提供一个持续流动的路径。因此也叫”续流（Freewheeling）”二极管。</p>
+</li>
+<li><p><strong>电感：</strong> 核心储能元件。在开关导通时储存能量（以磁场形式），在开关断开时释放能量，起到平滑电流的作用。</p>
+</li>
+<li><p><strong>电容：</strong> 另一个储能元件。主要作用是滤除输出电压的纹波，使得输出电压更加平滑稳定，为负载（Load）提供瞬时电流。</p>
+</li>
+</ol>
+<h2 id="二、工作原理详解（两个核心阶段）"><a href="#二、工作原理详解（两个核心阶段）" class="headerlink" title="二、工作原理详解（两个核心阶段）"></a>二、工作原理详解（两个核心阶段）</h2><p>Buck 电路的工作过程是周期性的，每个周期都包含两个主要阶段：<strong>开关导通（ON）</strong> 和 <strong>开关关断（OFF）</strong>。我们假设电路工作在<strong>连续导通模式（Continuous Conduction Mode, CCM）</strong>，这意味着电感中的电流在整个工作周期内始终大于零。</p>
+<h3 id="阶段一：开关-S-导通-时间-T-on"><a href="#阶段一：开关-S-导通-时间-T-on" class="headerlink" title="阶段一：开关 S 导通 (时间 $T_{on}$)"></a>阶段一：开关 S 导通 (时间 $T_{on}$)</h3><ol>
+<li><p><strong>电流路径</strong>：输入电压源 $V_{in}$ 通过闭合的开关 S，流经电感 L，一部分电流供给负载 R，另一部分为电容 C 充电。此时，续流二极管 D 因为其阳极电压（$V_{out}$）低于阴极电压（近似 $V_{in}$），处于反向截止状态，没有电流流过。</p>
+</li>
+<li><p><strong>电感行为</strong>：电感两端的电压为 $V_L &#x3D; V_{in} - V_{out}$。因为 $V_{in} &gt; V_{out}$，所以电感两端是一个正电压。根据电感公式 $V_L &#x3D; L \frac{dI_L}{dt}$，电感中的电流 $I_L$ 会线性增加。在这个阶段，输入电源向电感中注入能量，电感以磁场的形式储存这些能量。</p>
+</li>
+<li><p><strong>电容行为</strong>：电容 C 两端的电压就是输出电压 $V_{out}$。它会吸收一部分来自电感的电流，同时向负载供电，以维持输出电压的稳定，并滤除电压纹波。</p>
+</li>
+</ol>
+<h3 id="阶段二：开关-S-关断-时间-T-off"><a href="#阶段二：开关-S-关断-时间-T-off" class="headerlink" title="阶段二：开关 S 关断 (时间 $T_{off}$)"></a>阶段二：开关 S 关断 (时间 $T_{off}$)</h3><ol>
+<li><p><strong>电流路径</strong>：开关 S 断开，输入电源 $V_{in}$ 被切断。由于电感的电流不能突变（电感有维持电流的特性），它会产生一个反向电动势（上负下正）来试图维持电流继续流动。</p>
+</li>
+<li><p><strong>二极管行为</strong>：电感的反向电动势使得其上端电压变为负值，这会使得续流二极管 D 的阳极电压（近似 0V，即 GND）高于其阴极电压（负值），因此二极管 D 正向导通，形成一个新的回路：<strong>电感 L → 负载 R 和电容 C → 续流二极管 D → 电感 L</strong>。</p>
+</li>
+<li><p><strong>电感行为</strong>：此时，电感两端的电压为 $V_L &#x3D; -V_{out}$（忽略二极管的正向压降）。这是一个负电压，因此电感电流 $I_L$ 会线性下降。在这个阶段，电感将之前储存的磁场能量释放出来，继续为负载和电容供电。</p>
+</li>
+</ol>
+<h2 id="三、关键参数与数学关系"><a href="#三、关键参数与数学关系" class="headerlink" title="三、关键参数与数学关系"></a>三、关键参数与数学关系</h2><h3 id="1-占空比-Duty-Cycle-D"><a href="#1-占空比-Duty-Cycle-D" class="headerlink" title="1. 占空比 (Duty Cycle, D)"></a>1. 占空比 (Duty Cycle, D)</h3><p>占空比是控制 Buck 电路输出电压的关键参数。它定义为在一个开关周期（T）内，开关导通时间（$T_{on}$）所占的比例。</p>
+<p>$D &#x3D; \frac{T_{on}}{T} &#x3D; \frac{T_{on}}{T_{on} + T_{off}}$</p>
+<p>其中，T 是开关周期，$T &#x3D; 1&#x2F;f_s$，$f_s$ 是开关频率。</p>
+<h3 id="2-电压关系"><a href="#2-电压关系" class="headerlink" title="2. 电压关系"></a>2. 电压关系</h3><p>在一个稳定的工作周期中，电感在一个周期内的平均电压必须为零（否则电流将无限增大或减小），这被称为<strong>电感伏秒平衡原理</strong>。</p>
+<ul>
+<li>导通期间，电感电压的”伏秒积”为：$(V_{in} - V_{out}) \cdot T_{on}$</li>
+<li>关断期间，电感电压的”伏秒积”为：$(-V_{out}) \cdot T_{off}$</li>
+</ul>
+<p>根据伏秒平衡：</p>
+<p>$(V_{in} - V_{out}) \cdot T_{on} &#x3D; V_{out} \cdot T_{off}$</p>
+<p>整理上式：</p>
+<p>$V_{in} \cdot T_{on} &#x3D; V_{out} \cdot (T_{on} + T_{off}) &#x3D; V_{out} \cdot T$</p>
+<p>因此，我们得到 Buck 电路最核心的电压关系式：</p>
+<p>$V_{out} &#x3D; V_{in} \cdot \frac{T_{on}}{T} &#x3D; V_{in} \cdot D$</p>
+<p>这个公式清晰地表明：<strong>输出电压等于输入电压乘以占空比</strong>。由于占空比 D 的范围是 0 到 1，所以 $V_{out}$ 永远小于或等于 $V_{in}$，这就是”降压”的来源。控制电路通过精确调节占空比 D，就能实现对输出电压的稳定控制。</p>
+<h2 id="buck-电路的动态变化"><a href="#buck-电路的动态变化" class="headerlink" title="buck 电路的动态变化"></a>buck 电路的动态变化</h2><p>现在有一个由理想元件构成的开环 buck 电路，负载是一个可调电阻，我在把阻值调小的过程会发生什么</p>
+<p><strong>初始状态：旧平衡点</strong></p>
+<ul>
+<li>每个开关期间 $I_L$ 的平均值不变，等于$I_{out}$</li>
+<li>$V_{out}$也保持恒定</li>
+</ul>
+<p><strong>平衡被打破</strong></p>
+<ul>
+<li>负载电阻减小，由于电容电压不能瞬变，电感电流不能瞬变，根据欧姆定律，负载电流 $I_{out}$增大</li>
+<li>电容放电提供额外的电流，导致电压$V_{out}$开始轻微下降</li>
+</ul>
+<p><strong>物理定律负反馈</strong></p>
+<p>*a)*开关导通阶段</p>
+<ul>
+<li>电感电压 $V_L &#x3D; V_{in}-V_{out}$</li>
+<li>由于$V_{out}$下降，$V_L$比平衡点更大一点，</li>
+<li>电感的基本定理$V_{L}&#x3D;L \frac{d I_{L}}{d t},$，更大的电压意味着电流的上升的斜率更大</li>
+<li>同样的导通时间，会使得电流上升量更大</li>
+</ul>
+<p>*b)*开关断开阶段</p>
+<ul>
+<li>电感电压 $V_L &#x3D; -V_{out}$</li>
+<li>$V_{out}$下降，电感两段电压减小，意味着电流下降的斜率平缓了</li>
+<li>在同样的关断时间，电流下降的量更少</li>
+</ul>
+<p><strong>新平衡</strong></p>
+<ul>
+<li>在一个周期内，电流会上升一点点，电压会下降一点点</li>
+<li>重复这个周期 ，当电感平均电流等于新的负载电流，达到新的平衡</li>
+<li>此时电压也不再下降，固定在一个更低的位置</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%94%B5%E6%BA%90/" rel="tag"># 电源</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/08/17/LVGL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="LVGL学习笔记">
+      <i class="fa fa-chevron-left"></i> LVGL学习笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Buck-%E7%94%B5%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">Buck 电路</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.1.</span> <span class="nav-text">核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E4%B8%8E%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">1.2.</span> <span class="nav-text">一、核心思想与基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%AF%A6%E8%A7%A3%EF%BC%88%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E9%98%B6%E6%AE%B5%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">二、工作原理详解（两个核心阶段）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%EF%BC%9A%E5%BC%80%E5%85%B3-S-%E5%AF%BC%E9%80%9A-%E6%97%B6%E9%97%B4-T-on"><span class="nav-number">1.3.1.</span> <span class="nav-text">阶段一：开关 S 导通 (时间 $T_{on}$)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%BA%8C%EF%BC%9A%E5%BC%80%E5%85%B3-S-%E5%85%B3%E6%96%AD-%E6%97%B6%E9%97%B4-T-off"><span class="nav-number">1.3.2.</span> <span class="nav-text">阶段二：开关 S 关断 (时间 $T_{off}$)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E4%B8%8E%E6%95%B0%E5%AD%A6%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.</span> <span class="nav-text">三、关键参数与数学关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%8D%A0%E7%A9%BA%E6%AF%94-Duty-Cycle-D"><span class="nav-number">1.4.1.</span> <span class="nav-text">1. 占空比 (Duty Cycle, D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%94%B5%E5%8E%8B%E5%85%B3%E7%B3%BB"><span class="nav-number">1.4.2.</span> <span class="nav-text">2. 电压关系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#buck-%E7%94%B5%E8%B7%AF%E7%9A%84%E5%8A%A8%E6%80%81%E5%8F%98%E5%8C%96"><span class="nav-number">1.5.</span> <span class="nav-text">buck 电路的动态变化</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="CYZ"
+      src="/images/chino2.jpg">
+  <p class="site-author-name" itemprop="name">CYZ</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/CYZ2024" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;CYZ2024" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/241180180@smail.nju.edu.cn" title="E-Mail → 241180180@smail.nju.edu.cn"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">CYZ</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

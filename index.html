@@ -160,6 +160,158 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chino2.jpg">
+      <meta itemprop="name" content="CYZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CYZ的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/" class="post-title-link" itemprop="url">开关电源随笔</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-10 23:34:43" itemprop="dateCreated datePublished" datetime="2025-09-10T23:34:43+08:00">2025-09-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-09-12 21:23:46" itemprop="dateModified" datetime="2025-09-12T21:23:46+08:00">2025-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <span id="more"></span>
+
+<h1 id="Buck-电路"><a href="#Buck-电路" class="headerlink" title="Buck 电路"></a>Buck 电路</h1><img src="/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/image1.png" class="" title="Buck电路">
+
+<h2 id="核心思想与基本组成"><a href="#核心思想与基本组成" class="headerlink" title="核心思想与基本组成"></a>核心思想与基本组成</h2><p>Buck 电路是一种非常常见和高效的直流到直流（DC-DC）降压变换器。它的核心功能是将一个较高的直流电压转换成一个较低的、稳定的直流电压。</p>
+<h2 id="一、核心思想与基本组成"><a href="#一、核心思想与基本组成" class="headerlink" title="一、核心思想与基本组成"></a>一、核心思想与基本组成</h2><p>一个基本的 Buck 电路由以下四个关键元件组成：</p>
+<ol>
+<li><p><strong>开关（：</strong> 通常是一个 MOSFET，由一个控制电路（PWM 控制器）以极高的频率（通常是几十 kHz 到几 MHz）控制其快速导通和关断。</p>
+</li>
+<li><p><strong>肖特基二极管：</strong> 在开关断开时，为电感电流提供一个持续流动的路径。因此也叫”续流（Freewheeling）”二极管。</p>
+</li>
+<li><p><strong>电感：</strong> 核心储能元件。在开关导通时储存能量（以磁场形式），在开关断开时释放能量，起到平滑电流的作用。</p>
+</li>
+<li><p><strong>电容：</strong> 另一个储能元件。主要作用是滤除输出电压的纹波，使得输出电压更加平滑稳定，为负载（Load）提供瞬时电流。</p>
+</li>
+</ol>
+<h2 id="二、工作原理详解（两个核心阶段）"><a href="#二、工作原理详解（两个核心阶段）" class="headerlink" title="二、工作原理详解（两个核心阶段）"></a>二、工作原理详解（两个核心阶段）</h2><p>Buck 电路的工作过程是周期性的，每个周期都包含两个主要阶段：<strong>开关导通（ON）</strong> 和 <strong>开关关断（OFF）</strong>。我们假设电路工作在<strong>连续导通模式（Continuous Conduction Mode, CCM）</strong>，这意味着电感中的电流在整个工作周期内始终大于零。</p>
+<h3 id="阶段一：开关-S-导通-时间-T-on"><a href="#阶段一：开关-S-导通-时间-T-on" class="headerlink" title="阶段一：开关 S 导通 (时间 $T_{on}$)"></a>阶段一：开关 S 导通 (时间 $T_{on}$)</h3><ol>
+<li><p><strong>电流路径</strong>：输入电压源 $V_{in}$ 通过闭合的开关 S，流经电感 L，一部分电流供给负载 R，另一部分为电容 C 充电。此时，续流二极管 D 因为其阳极电压（$V_{out}$）低于阴极电压（近似 $V_{in}$），处于反向截止状态，没有电流流过。</p>
+</li>
+<li><p><strong>电感行为</strong>：电感两端的电压为 $V_L &#x3D; V_{in} - V_{out}$。因为 $V_{in} &gt; V_{out}$，所以电感两端是一个正电压。根据电感公式 $V_L &#x3D; L \frac{dI_L}{dt}$，电感中的电流 $I_L$ 会线性增加。在这个阶段，输入电源向电感中注入能量，电感以磁场的形式储存这些能量。</p>
+</li>
+<li><p><strong>电容行为</strong>：电容 C 两端的电压就是输出电压 $V_{out}$。它会吸收一部分来自电感的电流，同时向负载供电，以维持输出电压的稳定，并滤除电压纹波。</p>
+</li>
+</ol>
+<h3 id="阶段二：开关-S-关断-时间-T-off"><a href="#阶段二：开关-S-关断-时间-T-off" class="headerlink" title="阶段二：开关 S 关断 (时间 $T_{off}$)"></a>阶段二：开关 S 关断 (时间 $T_{off}$)</h3><ol>
+<li><p><strong>电流路径</strong>：开关 S 断开，输入电源 $V_{in}$ 被切断。由于电感的电流不能突变（电感有维持电流的特性），它会产生一个反向电动势（上负下正）来试图维持电流继续流动。</p>
+</li>
+<li><p><strong>二极管行为</strong>：电感的反向电动势使得其上端电压变为负值，这会使得续流二极管 D 的阳极电压（近似 0V，即 GND）高于其阴极电压（负值），因此二极管 D 正向导通，形成一个新的回路：<strong>电感 L → 负载 R 和电容 C → 续流二极管 D → 电感 L</strong>。</p>
+</li>
+<li><p><strong>电感行为</strong>：此时，电感两端的电压为 $V_L &#x3D; -V_{out}$（忽略二极管的正向压降）。这是一个负电压，因此电感电流 $I_L$ 会线性下降。在这个阶段，电感将之前储存的磁场能量释放出来，继续为负载和电容供电。</p>
+</li>
+</ol>
+<h2 id="三、关键参数与数学关系"><a href="#三、关键参数与数学关系" class="headerlink" title="三、关键参数与数学关系"></a>三、关键参数与数学关系</h2><h3 id="1-占空比-Duty-Cycle-D"><a href="#1-占空比-Duty-Cycle-D" class="headerlink" title="1. 占空比 (Duty Cycle, D)"></a>1. 占空比 (Duty Cycle, D)</h3><p>占空比是控制 Buck 电路输出电压的关键参数。它定义为在一个开关周期（T）内，开关导通时间（$T_{on}$）所占的比例。</p>
+<p>$D &#x3D; \frac{T_{on}}{T} &#x3D; \frac{T_{on}}{T_{on} + T_{off}}$</p>
+<p>其中，T 是开关周期，$T &#x3D; 1&#x2F;f_s$，$f_s$ 是开关频率。</p>
+<h3 id="2-电压关系"><a href="#2-电压关系" class="headerlink" title="2. 电压关系"></a>2. 电压关系</h3><p>在一个稳定的工作周期中，电感在一个周期内的平均电压必须为零（否则电流将无限增大或减小），这被称为<strong>电感伏秒平衡原理</strong>。</p>
+<ul>
+<li>导通期间，电感电压的”伏秒积”为：$(V_{in} - V_{out}) \cdot T_{on}$</li>
+<li>关断期间，电感电压的”伏秒积”为：$(-V_{out}) \cdot T_{off}$</li>
+</ul>
+<p>根据伏秒平衡：</p>
+<p>$(V_{in} - V_{out}) \cdot T_{on} &#x3D; V_{out} \cdot T_{off}$</p>
+<p>整理上式：</p>
+<p>$V_{in} \cdot T_{on} &#x3D; V_{out} \cdot (T_{on} + T_{off}) &#x3D; V_{out} \cdot T$</p>
+<p>因此，我们得到 Buck 电路最核心的电压关系式：</p>
+<p>$V_{out} &#x3D; V_{in} \cdot \frac{T_{on}}{T} &#x3D; V_{in} \cdot D$</p>
+<p>这个公式清晰地表明：<strong>输出电压等于输入电压乘以占空比</strong>。由于占空比 D 的范围是 0 到 1，所以 $V_{out}$ 永远小于或等于 $V_{in}$，这就是”降压”的来源。控制电路通过精确调节占空比 D，就能实现对输出电压的稳定控制。</p>
+<h2 id="buck-电路的动态变化"><a href="#buck-电路的动态变化" class="headerlink" title="buck 电路的动态变化"></a>buck 电路的动态变化</h2><p>现在有一个由理想元件构成的开环 buck 电路，负载是一个可调电阻，我在把阻值调小的过程会发生什么</p>
+<p><strong>初始状态：旧平衡点</strong></p>
+<ul>
+<li>每个开关期间 $I_L$ 的平均值不变，等于$I_{out}$</li>
+<li>$V_{out}$也保持恒定</li>
+</ul>
+<p><strong>平衡被打破</strong></p>
+<ul>
+<li>负载电阻减小，由于电容电压不能瞬变，电感电流不能瞬变，根据欧姆定律，负载电流 $I_{out}$增大</li>
+<li>电容放电提供额外的电流，导致电压$V_{out}$开始轻微下降</li>
+</ul>
+<p><strong>物理定律负反馈</strong></p>
+<p>*a)*开关导通阶段</p>
+<ul>
+<li>电感电压 $V_L &#x3D; V_{in}-V_{out}$</li>
+<li>由于$V_{out}$下降，$V_L$比平衡点更大一点，</li>
+<li>电感的基本定理$V_{L}&#x3D;L \frac{d I_{L}}{d t},$，更大的电压意味着电流的上升的斜率更大</li>
+<li>同样的导通时间，会使得电流上升量更大</li>
+</ul>
+<p>*b)*开关断开阶段</p>
+<ul>
+<li>电感电压 $V_L &#x3D; -V_{out}$</li>
+<li>$V_{out}$下降，电感两段电压减小，意味着电流下降的斜率平缓了</li>
+<li>在同样的关断时间，电流下降的量更少</li>
+</ul>
+<p><strong>新平衡</strong></p>
+<ul>
+<li>在一个周期内，电流会上升一点点，电压会下降一点点</li>
+<li>重复这个周期 ，当电感平均电流等于新的负载电流，达到新的平衡</li>
+<li>此时电压也不再下降，固定在一个更低的位置</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/08/17/LVGL%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -827,7 +979,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -840,7 +992,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
