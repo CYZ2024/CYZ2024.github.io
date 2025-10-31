@@ -272,6 +272,231 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/10/31/STM32%E7%94%9F%E6%88%90%E6%AD%A3%E5%BC%A6%E6%B3%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chino2.jpg">
+      <meta itemprop="name" content="CYZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CYZ的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/10/31/STM32%E7%94%9F%E6%88%90%E6%AD%A3%E5%BC%A6%E6%B3%A2/" class="post-title-link" itemprop="url">STM32生成正弦波</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-10-31 15:13:40 / 修改时间：15:21:12" itemprop="dateCreated datePublished" datetime="2025-10-31T15:13:40+08:00">2025-10-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1
+id="stm32-双核项目实验报告基于-pwmdma-的正弦波发生器与-adc-采样系统">STM32
+双核项目实验报告：基于 PWM+DMA 的正弦波发生器与 ADC 采样系统</h1>
+<hr />
+<h2 id="一实验目的">一、实验目的</h2>
+<p>本次实验使用两块 STM32
+微控制器搭建了一个完整的信号生成与采集系统，主要想实现以下功能：</p>
+<ul>
+<li><strong>信号发生器部分 (STM32F411RET6)</strong>：通过 PWM+DMA
+的方式生成可调频率的模拟正弦波信号</li>
+<li><strong>数据采集部分 (STM32F103C8T6)</strong>：用 ADC+TIM+DMA
+对生成的信号进行采样，并通过串口把数据传到电脑上分析</li>
+</ul>
+<hr />
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/10/31/STM32%E7%94%9F%E6%88%90%E6%AD%A3%E5%BC%A6%E6%B3%A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/22/Machine-Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/chino2.jpg">
+      <meta itemprop="name" content="CYZ">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="CYZ的个人博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/09/22/Machine-Learning/" class="post-title-link" itemprop="url">Machine Learning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2025-09-22 21:57:25" itemprop="dateCreated datePublished" datetime="2025-09-22T21:57:25+08:00">2025-09-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-10-07 22:51:14" itemprop="dateModified" datetime="2025-10-07T22:51:14+08:00">2025-10-07</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="machine-learning-overview">Machine Learning Overview</h1>
+<h2 id="supervised-learning">Supervised Learning</h2>
+<p>x -&gt; y Learn from data labeled with the “right answers”.
+通过提供正确的答案，算法学习给定的输入 X 和正确标签
+Y，最终学会在只有输入时做出准确的预测输出</p>
+<p>两个主要类别 Regresion(回归)，Classification(分类)</p>
+<h2 id="unsupervised-learning">Unsupervised learning</h2>
+<p>Find something interesting in unlabeled data. Data only comes with
+inputs x, but not output labels y. Algorithm has to find structure in
+the data. 三个主要类别， Clustering(Group simliar data points together),
+Anomaly detection(Find unusual data points), Dimensionality
+reductuon(Compress data using fewer numbers)</p>
+<h1 id="linear-regreesion-model">Linear Regreesion Model</h1>
+<h2 id="terminology">Terminology</h2>
+<p>Training set : Data used to train the model.</p>
+<p>Notation: x = “input” veriable feature</p>
+<p>y = “output”/“target” variable</p>
+<p>m = number of training examples</p>
+<p>(x, y) = single training example</p>
+<p>(x<sup>(i)</sup>, y<sup>(i)</sup>) = i<sup>th</sup> training
+example</p>
+<p>x<sub>j</sub> = j<sup>th</sup>feature</p>
+<p>n = number of features</p>
+<p><span
+class="math inline"><em>x⃗</em><sup>(<em>i</em>)</sup> = features of
+<em>i</em><sup><em>t</em><em>h</em></sup> training example</span></p>
+<h2 id="linear-regreesion-with-one-input">Linear Regreesion with one
+input</h2>
+<p>x -&gt; f -&gt; $ $</p>
+<p>f<sub>w,b</sub>(x) = wx + b</p>
+<h3 id="cost-function-squared-error-cost-function">Cost Function :
+Squared error cost function</h3>
+<p>Find w,b: $ $<sup>(i)</sup> is close to y<sup>(i)</sup> for all
+(x<sup>(i)</sup>, y<sup>(i)</sup>)</p>
+<p><span class="math display">$$
+J(w,b) = \frac{1}{2m} \sum_{i=1}^{m} \left( \hat{y}^{(i)} - y^{(i)}
+\right)^2
+$$</span></p>
+<h3 id="gradient-decent">Gradient Decent</h3>
+<p><span class="math display">$$
+w = w - \alpha \frac{d}{dw} J(w,b)
+$$</span></p>
+<p><span class="math display">$$
+b = b - \alpha \frac{d}{db } J(w,b)
+$$</span></p>
+<h2 id="linear-regreesion-with-multiple-variables">Linear Regreesion
+with Multiple Variables</h2>
+<p><span
+class="math display"><em>f</em><sub><em>w⃗</em>, <em>b</em></sub>(<em>X⃗</em>) = <em>w⃗</em> ⋅ <em>X⃗</em> + <em>b</em></span></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f = np.dot(w, x) + b</span><br></pre></td></tr></table></figure>
+<p><span class="math display">$$
+w_j = w_j - \alpha \frac{d}{dw_j} J(\vec{w},b)
+$$</span></p>
+<p><span class="math display">$$
+b = b - \alpha \frac{d}{db } J(\vec{w},b)
+$$</span></p>
+<p>Normal equation:</p>
+<ul>
+<li>only for linear regression</li>
+<li>solve for w, b without iteration</li>
+</ul>
+<h3 id="feature-scaling">Feature Scaling</h3>
+<h3 id="checking-gradient-fescent-gor-convergence">Checking Gradient
+Fescent gor Convergence</h3>
+<p>Let <span class="math inline"><em>ϵ</em> = 10<sup>−3</sup></span></p>
+<p>If <span
+class="math inline"><em>J</em>(<em>w⃗</em>, <em>b</em>)</span> decreases
+by &lt;= <span class="math inline"><em>ϵ</em></span> in one iteration,
+dedlare convergence</p>
+<h3 id="choosing-learning-rate">Choosing learning rate</h3>
+<h3 id="feature-engineering">Feature Engineering</h3>
+<h3 id="polynomial-regression">Polynomial Regression</h3>
+<h1 id="classification">Classification</h1>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/09/10/%E5%BC%80%E5%85%B3%E7%94%B5%E6%BA%90%E9%9A%8F%E7%AC%94/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -902,89 +1127,11 @@ V3.5.0</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/07/26/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/chino2.jpg">
-      <meta itemprop="name" content="CYZ">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="CYZ的个人博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2025/07/26/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2025-07-26 15:55:59 / 修改时间：15:56:00" itemprop="dateCreated datePublished" datetime="2025-07-26T15:55:59+08:00">2025-07-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very
-first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for
-more info. If you get any problems when using Hexo, you can find the
-answer in <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or
-you can ask me on <a
-target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a
-target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
 
 
 
@@ -1051,7 +1198,7 @@ target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
